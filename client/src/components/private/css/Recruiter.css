@@ -1,0 +1,85 @@
+.recruiter-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+  .profile-section {
+    flex: 0.3;  /* Takes up remaining space */
+    padding: 20px;
+    /* Future styling can go here */
+  }
+  
+  .controls {
+    padding: 10px 20px;
+    height: 33% absolute;
+    background-color: #eee; /* Light gray background for controls section */
+    border-top: 1px solid #ccc;
+    justify-content: space-evenly;
+  }
+
+  .bar {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .controls button {
+    padding: 10px 20px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .controls button:hover {
+    background-color: #2b2b2c;
+  }
+  
+  .controls button:focus {
+    outline: none;
+    background-color: #2b2b2c;
+  }
+
+  .custom-dropdown {
+    padding: 8px 16px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    -moz-appearance: none;  /* Removes default styles for Firefox */
+    -webkit-appearance: none;  /* Removes default styles for Chrome and Safari */
+    appearance: none;  /* Removes default styles for modern browsers */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Adds custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    transition: background-color 0.3s;
+  }
+  
+  .custom-dropdown:hover {
+    background-color: #b8b8b8;
+  }
+  
+  .custom-dropdown:focus {
+    outline: none;
+  }
+
+  .create-room button {
+    padding: 10px;
+    background-color: #000; /* Dark blue background */
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .create-room button:hover {
+    background-color: #343434; /* Slightly darker blue on hover */
+  }
+  
+  .activeComponent {
+    width: 30%;
+    position: relative;
+    left: 35%;
+  }

@@ -1,0 +1,53 @@
+.landing-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 900px; /* Adjust the max width as needed */
+    gap: 50px; /* Horizontal gap between forms */
+  }
+  
+  .site-header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #000000; /* Light background for the header */
+    margin-bottom: 20px; /* Space below the header */
+    font-size: 14px; /* Larger font size for the site name */
+    color: #fff;
+  }
+     
+  .signup-container, .login-container {
+    flex: 1; /* Both containers take up equal space */
+    padding: 20px; /* Space inside each form container */
+    border: 1px solid #ccc; /* Border around each form */
+    border-radius: 8px; /* Rounded corners for the form containers */
+    background-color: #f9f9f9; /* Light grey background */
+  }
+  
+  .form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px; /* Space below the title */
+  }
+  
+  input {
+    width: calc(100% - 22px); /* Full width minus padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #000; /* Dark blue background */
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #343434; /* Slightly darker blue on hover */
+  }
+  
