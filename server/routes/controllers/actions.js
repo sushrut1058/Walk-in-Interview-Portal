@@ -1,3 +1,4 @@
+const path = require('path');
 const User = require('../../models/User');
 const Room = require('../../models/Room');
 const Candidate = require('../../models/Candidate');
@@ -52,9 +53,7 @@ exports.createRoom = async (req, res) => {
             roomId:roomId,
             userId:userId
         });
-
         res.status(201).json({message:'Room Created Successfully!', roomId: roomId})
-
     }catch (e){
         console.log("Error creating room", e);
         res.status(500).json({message:'Something went wrong while creating the room'});
@@ -82,6 +81,52 @@ exports.getHistory = async (req,res) => {
     } catch (e) {
         res.status(500).json({message:"Error fetching rooms"});
     }
+}
 
-        
+exports.fetchProfile = async (req, res) => {
+    const {userId} = req.params;
+    console.log("userid:",userId);
+    if (req.userId!==userId && req.role!==2){
+        return res.status(401).json({message: "Not authorized to view the profile"});
+    }
+    try{
+        const user = await User.findOne({
+            where:{
+                id: userId
+            }
+        });
+        if (user){
+            return res.status(200).json({first_name: user.first_name, last_name: user.last_name, company: user.company, linkedin: user.linkedin, github: user.github});
+        }else{
+            return res.status(404).json({message: "Can't find the profile"});
+        }
+    } catch (e) {
+        return res.status(500).json({message: "Something went wrong while fetching the user's profile"});
+    } 
+}
+
+exports.fetchCV = async (req, res) => {
+    const {userId} = req.params;
+    if(!userId){
+        return res.status(500).json({message:"Internal server error!"});
+    }
+    console.log("userid:",userId);
+    if (req.userId!==userId && req.role!==2){
+        return res.status(401).json({message: "Not authorized to view the profile"});
+    }
+
+    try {
+        const user = await User.findOne({
+            where:{
+                id: userId
+            }
+        });
+        if(!user || !user.cv){
+            return res.status(400).json({message: "Either the user or the CV doesn't exist!"});
+        }
+        return res.sendFile(path.join(__dirname,"../../", user.cv));
+    } catch (e) {
+        console.error('Error fetching CV:', e);
+        res.status(500).json({ message: 'Internal Server Error' });    
+    }
 }

@@ -20,7 +20,6 @@
     flex: 1; /* Both containers take up equal space */
     padding: 20px; /* Space inside each form container */
     border: 1px solid #ccc; /* Border around each form */
-    border-radius: 8px; /* Rounded corners for the form containers */
     background-color: #f9f9f9; /* Light grey background */
   }
   
@@ -39,7 +38,6 @@
   }
   
   button {
-    width: 100%;
     padding: 10px;
     background-color: #000; /* Dark blue background */
     color: white;

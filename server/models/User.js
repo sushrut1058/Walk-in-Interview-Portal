@@ -24,7 +24,30 @@ const User = sequelize.define('User', {
         defaultValue: false
     },
     email_verification_token: DataTypes.STRING,
-    role: DataTypes.INTEGER
+    role: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    company: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+    linkedin: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    github: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    companyLinkedin: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    cv: {
+        type: DataTypes.STRING, // Store the path or URL to the CV file
+        allowNull: true
+    }   
 }, {
     // Additional model options
 });

@@ -5,6 +5,8 @@ import { Socket, io } from 'socket.io-client';
 import Container from '../components/private/Container';
 import Waiting from '../components/private/Waiting';
 import axios from 'axios';
+import './css/Room.css';
+import Header from '../components/private/Header';
 
 const Room: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -18,7 +20,7 @@ const Room: React.FC = () => {
   const partnerVideo = useRef<HTMLVideoElement>(null);
   const peerRef = useRef<RTCPeerConnection | null>(null);
   const otherUser = useRef<string | null> (null);
-  
+  const [peerVideoStarted, setPeerVideoStarted] = useState(false);
   const [master, setMaster] = useState(false);
   const [allowed, setAllowed] = useState(false);
 
@@ -40,7 +42,7 @@ const Room: React.FC = () => {
   };
   
   useEffect(()=>{
-    // getUserMedia();
+
     const token = localStorage.getItem("access");
     let namespace = "room";
 
@@ -70,6 +72,7 @@ const Room: React.FC = () => {
 
   //socket event handler
   const handleReceiveCall = async (incoming : any) => {
+    setPeerVideoStarted(true);
     otherUser.current = incoming.caller;
     peerRef.current = createPeer();
     // peerRef.current.ontrack = handleTrackEvent;
@@ -103,6 +106,7 @@ const Room: React.FC = () => {
 
   //feature
   const callUser = async (userId : any) => {
+    setPeerVideoStarted(true);
     peerRef.current = createPeer(userId);
     if (userStreamRef.current){
       const userStreamTemp = userStreamRef.current;
@@ -120,7 +124,7 @@ const Room: React.FC = () => {
   const handleTrackEvent = (event : RTCTrackEvent) => {
     if(partnerVideo.current){
       console.log("track event");
-      partnerVideo.current.srcObject = event.streams[0];
+      partnerVideo.current.srcObject = event.streams[0];      
     }else{
       console.log("nope");
     }
@@ -150,6 +154,10 @@ const Room: React.FC = () => {
   }
   
   const showWaiting = () => {
+    if(waitingComp){
+      setWaitingComp(undefined);
+      return;
+    }
     setWaitingComp(<Waiting roomId={roomId}/>);
   }
   
@@ -229,41 +237,48 @@ const Room: React.FC = () => {
 
   return (
     <div>
+      <Header/>
+    <div className='room-container'>
+      <div className='video-and-controls'>
       <h1>Welcome to Room {roomId}</h1>
-      {master && 
-        (
-          <>
-          <div>
-            <button onClick={showWaiting}>Waiting Arena</button>
-            <Container activeComponent={waitingComp} />
-          </div>
-          <div>
-            <button onClick={()=>callUser(8)}>Call</button>
-          </div>
-          </>
-        )
-      }
       {allowed && 
         (
           <div>
-            {/* Here you would integrate your video chat functionality */}
-            <div>
-              <h3>Me</h3>
-              <video ref={userVideo} autoPlay playsInline />
-            </div>
-            <div>
+            
+            {peerVideoStarted && (
+            <div>  
               <h3>Peer</h3>
               <video ref={partnerVideo} autoPlay playsInline />
               <button onClick={saveUser}>Save User</button>
             </div>
-            <button onClick={toggleMute}>Toggle Mute</button>
-            <button onClick={toggleVideo}>Toggle Video</button> 
+            )}
+            
+            <h3>Me</h3>
+            <div className="video-container">
+              <video ref={userVideo} autoPlay playsInline />
+              <div className="controls-overlay">
+                <button onClick={toggleMute}>Toggle Mute</button>
+                <button onClick={toggleVideo}>Toggle Video</button> 
+              </div>
+            </div>
+            
+            
+            <div>
+            <button onClick={()=>callUser(2)}>Call</button>
+          </div>
           </div>
         )
       }
-
-      
-      
+      </div>
+      {master && 
+        (
+          <div className="waiting-area">
+            <button onClick={showWaiting} className="waiting-arena-btn">Waiting Arena</button>
+            <Container activeComponent={waitingComp} />
+          </div>
+        )
+      }      
+    </div>
     </div>
   );
 };

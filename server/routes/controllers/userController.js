@@ -124,6 +124,11 @@ exports.validateToken = (req, res) => {
 // finally the user object that should remain consistent across all pages, {id, fn, ln, active}
 exports.onboardUser = async (req, res) => {
     const role = req.body.role;
+    const company = req.body.company;
+    const linkedin = req.body.linkedin;
+    const github = req.body.github;
+    const cv = req.file.path;
+
     const userId = req.userId;
     if (!['Hire', 'Hunt'].includes(role)){
         return res.status(400).json({ message : "Okay keep trying beyotch" });
@@ -143,6 +148,10 @@ exports.onboardUser = async (req, res) => {
         }
 
         user.role = role==='Hire' ? 2 : 1;
+        user.company = company
+        user.linkedin = linkedin;
+        user.github = github;
+        user.cv = cv;
         user.is_onboarded = true;
         await user.save();
         const token = jwt.sign({ email: user.email, id: user.id, role: user.role }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });

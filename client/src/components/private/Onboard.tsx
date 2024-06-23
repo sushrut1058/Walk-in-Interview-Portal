@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import './css/Onboard.css';
 
 interface User{
   company: string | null;
@@ -13,7 +14,6 @@ interface User{
 const Onboard: React.FC = () => {
   
   const { isAuthenticated, user, isLoading, logOut, updateUser, validateToken } = useAuth(); // Destructure to get isAuthenticated
-  const [role, setRole] = useState<string>('');
   const [userData, setUserData] = useState<User>({
     company: null,
     linkedin: null,
@@ -30,28 +30,27 @@ const Onboard: React.FC = () => {
   const onboardUser = async (event : React.FormEvent) => {
     event.preventDefault();
 
-    if(!role){
-        alert("Please select a role!");
-        return;
-    }
-
     try{
         const token = localStorage.getItem('access');
-        
+        const formData = new FormData();
+
+        formData.append('role', userData.role || '');
+        formData.append('company', userData.company || '');
+        formData.append('linkedin', userData.linkedin || '');
+        formData.append('github', userData.github || '');
+        formData.append('cv', userData.cv as Blob);
+        console.log(formData);
         const response = await fetch('http://localhost:8000/acc/onboard',{
             method: "POST",
             headers:{
-              "Content-Type":"application/json",
               Authorization : `Bearer ${token}`
             },
-            body:JSON.stringify({role})
+            body: formData
         })
 
         if(response.ok){
             alert("User Onboarded successfully");
             const data = await response.json();
-            // const updatedUser = {...user, is_onboarded:true, role:{role}};
-            // updateUser(updatedUser);
             localStorage.setItem('access', data.token);
             validateToken();
         }else{
@@ -65,8 +64,13 @@ const Onboard: React.FC = () => {
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({ ...prevData, [name]: value }));
+    const { name, value, files } = e.target;
+    if (name==='cv' && files){
+      setUserData((prevData) => ({ ...prevData, [name]: files[0] }));
+    }else{
+      console.log(userData.role)
+      setUserData((prevData) => ({ ...prevData, [name]: value }));
+    }
   }
 
   console.log()
@@ -74,28 +78,37 @@ const Onboard: React.FC = () => {
     <div>
       <h1>Onboarding Page, Hello: {user.first_name}</h1>
       <form>
-      <label>
+      <div className="radio-group">
+        Role:
+        <label>
         <input
           type="radio"
+          name="role"
           value="Hire"
           checked={userData.role === 'Hire'}
           onChange={handleInputChange}
         />
         Hire
-      </label>
-      <label>
+        </label>
+        <label>
         <input
           type="radio"
+          name="role"
           value="Hunt"
           checked={userData.role === 'Hunt'}
           onChange={handleInputChange}
         />
         Hunt
-      </label><br/>
-      <input type="text" onChange={handleInputChange} value={user.company} name="company"/>
-      <input type="text" onChange={handleInputChange} value={user.linkedin} name="linkedin"/>
-      <input type="text" onChange={handleInputChange} value={user.github} name="github"/>
-
+        </label>
+      </div>
+      <br/>
+      <input type="text" onChange={handleInputChange} value={user.company} name="company" placeholder="Company"/>
+      <input type="text" onChange={handleInputChange} value={user.linkedin} name="linkedin" placeholder="LinkedIn Profile"/>
+      <input type="text" onChange={handleInputChange} value={user.github} name="github" placeholder="Github"/>
+      <label>
+        Upload Resume:
+        <input type="file" onChange={handleInputChange} accept=".pdf" name="cv"/>
+      </label>
       <button name="submit" onClick={onboardUser}>Finish!</button>
     </form>
       

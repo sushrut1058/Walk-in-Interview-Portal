@@ -11,7 +11,6 @@ const sequelize = require('./models/config/database');
 const { setupSocket, socketServer } = require('./sockets/index');
 
 const {authenticateSocket, authenticateSocket_recruiter} = require('./middleware/auth');
-
 const server = http.createServer(app);
 socketServer(server);
 

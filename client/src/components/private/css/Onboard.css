@@ -1,0 +1,18 @@
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 5px;
+  }
+  
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .radio-group input[type="radio"] {
+    margin-right: 5px;
+    margin-top: 10px;
+  }
+  

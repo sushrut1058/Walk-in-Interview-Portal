@@ -7,6 +7,7 @@ import Recruiter from "../components/private/Recruiter";
 import { SocketProvider } from "../contexts/SocketContext";
 import logOutIcon from "../static/logout.png"
 import "./css/HomePage.css"
+import Header from "../components/private/Header";
 
 const HomePage: React.FC = () => {
   
@@ -14,15 +15,9 @@ const HomePage: React.FC = () => {
   const handleLogout = () => {
     auth.logOut();
   }
-  console.log(auth.user);
   return (
     <div className="home-page">
-      <header className="home-header">
-        <h2>Timbre</h2>
-        <button onClick={handleLogout} className="logout-button">
-          <img src={logOutIcon}/>
-        </button>
-      </header>
+      <Header/>
       <div className="content-area">
     {auth.user.active ? 
       

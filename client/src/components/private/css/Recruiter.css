@@ -67,6 +67,7 @@
   }
 
   .create-room button {
+    width: 100%;
     padding: 10px;
     background-color: #000; /* Dark blue background */
     color: white;
@@ -83,3 +84,35 @@
     position: relative;
     left: 35%;
   }
+
+  .bar {
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;  /* Ensures the bar takes full width */
+  }
+  
+  .bar button {
+    flex: 1;  /* Each button will take equal space */
+    padding: 10px 20px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-right: 1px solid #fff; /* Adding a white border to distinguish buttons */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 0px;
+    margin: 0;  
+  }
+  
+  .bar button:last-child {
+    border-right: none;  /* Removes border for the last button */
+  }
+  
+  .bar button:hover {
+    background-color: #2b2b2c;
+  }
+  
+  .bar button.active {
+    background-color: #2b2b2c;
+  }
+  

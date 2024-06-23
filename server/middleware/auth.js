@@ -20,6 +20,7 @@ exports.authenticate = async (req, res, next) => {
         const decoded = jwt.verify(token, 'secret'); // Replace 'secret' with your secret key or use environment variables
 
         req.userId = decoded.id; // Add the user ID to the request object
+        req.role = decoded.role;
         const user = await User.findByPk(decoded.id);
         if (!user) {
             throw new Error("User not found!");

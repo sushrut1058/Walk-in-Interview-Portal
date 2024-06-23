@@ -41,6 +41,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
             const data = await response.json();
             setIsAuthenticated(true);
             setUser(data);
+            console.log(user);
         } else {
             const data = await response.json();
             setIsAuthenticated(false);
@@ -70,7 +71,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
 
   useEffect(()=>{
         validateToken();
-    },[])
+    },[isAuthenticated])
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, isLoading, user, validateToken, updateUser, logIn, logOut }}>

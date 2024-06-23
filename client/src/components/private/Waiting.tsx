@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import io, { Socket } from "socket.io-client";
+import './css/Waiting.css';
 
 interface User{
   id: string,
@@ -15,11 +16,9 @@ interface WaitingProps{
 const sock_url = "http://localhost:8000";
 
 const Waiting: React.FC<WaitingProps> = ({roomId}) => {
-  const {user} = useAuth();
   const [users, setUsers] = useState<User[]>([]);
-  // let socket: Socket | null; 
   const socket = useRef<Socket | null>(null);
-
+  const auth = useAuth();
   const navigate = useNavigate();
 
   const sendInvite = (userId: string | any) => {
@@ -41,8 +40,6 @@ const Waiting: React.FC<WaitingProps> = ({roomId}) => {
       navigate(`/room/${roomId}`);
     }
     const updateUsers = (activeUsers: User[]) => {
-      // const filterUsers = activeUsers.filter(ac_user => ac_user.id!==user.id);
-      // setUsers(filterUsers);
       setUsers(activeUsers);
     }
     try{
@@ -61,14 +58,22 @@ const Waiting: React.FC<WaitingProps> = ({roomId}) => {
   },[]);
 
   return (
-
-    <div>
-      <ul>
-        {users.map(user=>(
-          <li key={user.id}><span>{user.id} : {user.first_name}</span><span> <button onClick={()=>sendInvite(user.id)}>Invite</button> <button>Profile</button></span></li>
-        ))}
-      </ul>
-    </div>
+      <div className='waitingContainer'>
+        <ul>
+          {users.map(user=>(
+            <li key={user.id}>
+              <span className="title">
+                {user.id} : {user.first_name}
+              </span>
+              {auth.user.role==2 && (
+                <span className='btns'> 
+                  <button onClick={()=>sendInvite(user.id)}>Invite</button> <button>Profile</button>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
   );
 };
 
