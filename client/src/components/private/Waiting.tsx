@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import io, { Socket } from "socket.io-client";
 import './css/Waiting.css';
+import Profile from './Profile';
 
 interface User{
   id: string,
@@ -13,11 +14,13 @@ interface WaitingProps{
   roomId: string | undefined
 }
 
-const sock_url = "http://localhost:8000";
+const sock_url = "http://localhost:5000";
 
 const Waiting: React.FC<WaitingProps> = ({roomId}) => {
   const [users, setUsers] = useState<User[]>([]);
   const socket = useRef<Socket | null>(null);
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -29,6 +32,16 @@ const Waiting: React.FC<WaitingProps> = ({roomId}) => {
       console.log("Null socket");
     }
   }
+
+  const showProfile = (userId: string) => {
+    setSelectedUser(null);
+    setSelectedUser(userId);
+  }
+
+  const closeProfile = () => {
+    setSelectedUser(null);
+  }
+
   useEffect(()=>{  
     if (socket.current) {
       socket.current.disconnect();
@@ -67,12 +80,20 @@ const Waiting: React.FC<WaitingProps> = ({roomId}) => {
               </span>
               {auth.user.role==2 && (
                 <span className='btns'> 
-                  <button onClick={()=>sendInvite(user.id)}>Invite</button> <button>Profile</button>
+                  <button onClick={()=>sendInvite(user.id)}>Invite</button> 
+                  <button onClick={()=>setSelectedUser(user.id)}>Profile</button>
                 </span>
               )}
             </li>
           ))}
         </ul>
+        <div className='ProfileComp'>
+        {selectedUser && 
+          <div>
+            <button onClick={closeProfile}>Back</button>
+            <Profile userId={selectedUser}/>
+          </div>}
+        </div>
       </div>
   );
 };

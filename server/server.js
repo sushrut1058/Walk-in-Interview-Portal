@@ -14,7 +14,7 @@ const {authenticateSocket, authenticateSocket_recruiter} = require('./middleware
 const server = http.createServer(app);
 socketServer(server);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 /*
 Initialize Sequelize and the HTTP server

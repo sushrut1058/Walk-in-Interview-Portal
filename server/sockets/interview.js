@@ -15,26 +15,50 @@ function Interview(interview){
         return false;
     }
 
+    function loadCurrentState(roomId) {
+        var curState = roomStates.getRoomState(roomId);
+        if(curState && !(curState.creator)) curState.creator = -1;
+        if(curState && !(curState.attendee)) curState.attendee = -1;
+        if(!curState) {
+            curState={creator:-1, attendee:-1};
+        }  
+        return curState; 
+    }
+
     interview.on('connection', (socket) => {
         console.log("Room with new socket:", socket.id);
         
         socket.on("joinRoom",(roomId)=>{
-            var curState = roomStates.getRoomState(roomId);
-            if(curState && !(curState.creator)) curState.creator = -1;
-            if(curState && !(curState.attendee)) curState.attendee = -1;
-            if(!curState) {
-                curState={creator:-1, attendee:-1};
-            }
+
+            var curState = loadCurrentState(roomId);
+
             meth.isMember(socket,roomId, ()=>{    
                 interview.to(socket.id).emit("authorized", socket.user.role);
                 socketMap.set(socket.user.id, socket.id);
                 //room join
                 socket.join(roomId);
                 console.log(`Socket ${socket.id} joined Room ${roomId}`);
+                
+                socket.on("attendee-joined", () => {
+                    console.log("receivedeventattendeejoined");
+                    curState = loadCurrentState(roomId);
+                    if (socket.id===socketMap.get(curState.attendee)){
+                        console.log("receivedeventattendeejoined-true");
+                        interview.to(socketMap.get(curState.creator)).emit('attendee-joined', curState.attendee);
+                    }else{ 
+                        console.log("receivedeventattendeejoined-false");
+                        socket.emit("error", "Not an attendee");
+                    }
+                })
 
                 socket.on("offer", (payload) => {
-                    console.log("offer", payload.target);
-                    interview.to(socketMap.get(payload.target)).emit("offer", payload);
+                    curState = loadCurrentState(roomId);
+                    console.log("offer", payload.target, curState.attendee);
+                    if(curState.attendee===payload.target){
+                        interview.to(socketMap.get(payload.target)).emit("offer", payload);
+                    }else{
+                        socket.emit("error", "Can't find peer to call!");
+                    }
                 });
 
                 socket.on("answer", (payload) => {
@@ -48,6 +72,7 @@ function Interview(interview){
                 });
 
                 socket.on("remove", (usr_id)=>{
+                    curState = loadCurrentState(roomId);
                     try{
                         if(curState && curState.attendee==usr_id)
                         roomStates.setRoomState(roomId, {creator: curState.creator, attendee: -1});
@@ -59,6 +84,7 @@ function Interview(interview){
 
                 socket.on("toggle-video", (msg) => {
                     console.log("toggle video triggered");
+                    curState = loadCurrentState(roomId);
                     try{
                         if(curState.creator==socket.user.id) interview.to(socketMap.get(curState.attendee)).emit("toggle-video", msg);
                         else interview.to(socketMap.get(curState.creator)).emit("toggle-video", msg);
@@ -69,9 +95,8 @@ function Interview(interview){
 
             });
 
-            
-
             socket.on("disconnect", ()=>{
+                curState = loadCurrentState(roomId);
                 console.log("User disconnected, id: ", socket.user.id, curState);
                 if(curState && curState.creator===socket.user.id){
                     console.log("creator left");
@@ -80,7 +105,7 @@ function Interview(interview){
                     console.log("attendee left");
                     roomStates.setRoomState({creator: curState.creator, attendee: -1});
                 }else{
-                    console.log("Fucker trying to act smart");
+                    console.log("[socket-disconnect] Something went wrong!");
                 }
             });
         })

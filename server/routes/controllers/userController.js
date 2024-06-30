@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
             email_verification_token: emailVerificationToken
         });
         
-        const verificationUrl = `http://localhost:8000/acc/verify-email/${user.id}/${emailVerificationToken}`;
+        const verificationUrl = `http://localhost:5000/acc/verify-email/${user.id}/${emailVerificationToken}`;
         await transporter.sendMail({
             to: email,
             subject: 'Verify your email',
@@ -184,7 +184,7 @@ exports.resendEmail = async (req, res) => {
         user.email_verification_token = emailVerificationToken;
         await user.save();
 
-        const verificationUrl = `http://localhost:8000/acc/verify-email/${user.id}/${emailVerificationToken}`;
+        const verificationUrl = `http://localhost:5000/acc/verify-email/${user.id}/${emailVerificationToken}`;
         await transporter.sendMail({
             to: user.email,
             subject: 'Verify your email',

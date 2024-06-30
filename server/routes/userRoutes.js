@@ -24,7 +24,7 @@ router.post('/acc/resend_email', authenticate_lv1, resendEmail);
 router.post('/acc/onboard', authenticate_lv1, upload.single('cv'), onboardUser);
 router.post('/actions/create-room', authenticate, createRoom);
 router.get('/actions/active-rooms', authenticate, getActiveRooms);
-router.get('/actions/save', authenticate, saveUser);
+router.post('/actions/save', authenticate, saveUser);
 router.get('/actions/history', authenticate, getHistory);
 router.get('/actions/profile/:userId', authenticate, fetchProfile);
 router.get('/actions/cv/:userId', authenticate, fetchCV);

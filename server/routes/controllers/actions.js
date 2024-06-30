@@ -6,28 +6,32 @@ const { v4: uuidv4 } = require('uuid');
 
 exports.saveUser = async (req, res) => {
     try{
-        const roomId = await Room.findOne({
+        console.log("Req.userId",req.userId);
+        const room = await Room.findOne({
             where:{
                 userId: req.userId
             }
         });
-        if(roomId){
+        
+        if(room){
             console.log("Found room");
+            console.log("RoomId",room.roomId);
         }else{
-            return req.status(400).json({message: "Invalid request"});
+            return res.status(400).json({message: "Invalid request"});
         }
         const newUser = await Candidate.create({
-            roomId: roomId,
+            roomId: room.roomId,
             userId: req.userId
         });
         if(newUser){
-            return req.status(201).json({message: "User saved successfully!"});
+            return res.status(201).json({message: "User saved successfully!"});
         }else{
-            return req.status(400).json({message: "Trouble saving user"});
+            return res.status(400).json({message: "Trouble saving user"});
         }
 
     } catch (e) {
-
+        console.log("Error saving user", e);
+        res.status(500).json({message:'Something went wrong while saving user'});
     }
 }
 

@@ -17,7 +17,7 @@ const RoomHistory: React.FC = () => {
     const fetchRooms = async () => {
         try{
             const token = await localStorage.getItem('token');
-            const resp = await axios.get("http://localhost:8000/actions/history", {
+            const resp = await axios.get("http://localhost:5000/actions/history", {
                 headers:{
                     'Authorization':`Bearer ${token}`,
                     'Content-type': 'application/json'

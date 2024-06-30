@@ -16,7 +16,7 @@ const CreateRoom: React.FC = () => {
     try{
         const token = await localStorage.getItem('access');
 
-        const response = await axios.post("http://localhost:8000/actions/create-room",{
+        const response = await axios.post("http://localhost:5000/actions/create-room",{
             title: title,
             duration: duration
         },{

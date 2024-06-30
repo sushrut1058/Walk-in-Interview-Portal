@@ -1,56 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useSocket } from "../../contexts/SocketContext";
+import CreateRoom from "./Home/CreateRoom";
+import axios from "axios";
+import Container from "./Container";
+import ActiveRooms from "./Home/ActiveRooms";
+import "./css/Recruiter.css"
+import RoomHistory from "./Home/RoomHistory";
+import Profile from "./Profile";
+
+const sock_url = "http://localhost:5000";
 
 const Hunter: React.FC = () => {
   
   const { isAuthenticated, user, isLoading, logOut, updateUser, validateToken } = useAuth(); // Destructure to get isAuthenticated
-  const [role, setRole] = useState<string>('');
+  const [activeComp, setActiveComp] = useState<React.ReactElement>();
+  const [activeButton, setActiveButton] = useState<string>('');
 
   if (isLoading){
     return <div>Loading...</div>
+  }else{
+    console.log("user.id:",user.id, isAuthenticated);
   }
+  
 
-  const handleSubmit = async (event : React.FormEvent) => {
-    event.preventDefault();
-
-    if(!role){
-        alert("Please select a role!");
-        return;
-    }
-
-    try{
-        const token = localStorage.getItem('access');
-        
-        const response = await fetch('http://localhost:8000/acc/onboard',{
-            method: "POST",
-            headers:{
-              "Content-Type":"application/json",
-              Authorization : `Bearer ${token}`
-            },
-            body:JSON.stringify({role})
-        })
-
-        if(response.ok){
-            alert("User Onboarded successfully");
-            const data = await response.json();
-            // const updatedUser = {...user, is_onboarded:true, role:{role}};
-            // updateUser(updatedUser);
-            validateToken();
-        }else{
-            const data = await response.json();
-            console.log(data.message);
-        }
-    }catch(error) {
-        console.log("Something wrong with resending email:", error)
-    }
-
-  }
-
-  console.log()
+  const handleCompSwitch = (component: React.ReactElement, buttonId: string) => {
+    setActiveComp(component);
+    setActiveButton(buttonId);
+  };
+  
   return (
-    <div>
-        <h1>Hunter Page</h1>
+    <div className="recruiter-page">
+        <div className="profile-section">
+          <h4>Profile</h4>
+          <Profile userId={user.id}/>
+        </div>
+        <div className="controls">
+          <div className="bar">
+            <button className={activeButton === 'active'? 'active': ''} onClick={() => handleCompSwitch(<ActiveRooms/>, 'active')}>Active rooms</button>
+            <button className={activeButton === 'history'? 'active': ''} onClick={() => handleCompSwitch(<RoomHistory/>, 'history')}>History</button> 
+          </div>
+          <div className="activeComponent">
+            <Container activeComponent={activeComp}/>
+          </div>
+        </div>
     </div>
   );
 };

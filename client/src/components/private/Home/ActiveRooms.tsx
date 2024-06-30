@@ -17,7 +17,7 @@ const ActiveRooms: React.FC = () => {
   const checkActiveRooms = async () => {
     try{
       const token = localStorage.getItem('access');
-      const response = await axios.get("http://localhost:8000/actions/active-rooms",{
+      const response = await axios.get("http://localhost:5000/actions/active-rooms",{
         headers:{
           "Authorization":`Bearer ${token}`
         }

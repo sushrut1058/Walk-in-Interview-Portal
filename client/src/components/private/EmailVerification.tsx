@@ -13,7 +13,7 @@ const EmailVerification: React.FC = () => {
     try{
         const token = localStorage.getItem('access');
 
-        const response = await fetch('http://localhost:8000/acc/resend_email',{
+        const response = await fetch('http://localhost:5000/acc/resend_email',{
             method: "POST",
             headers:{
               Authorization: `Bearer ${token}`,

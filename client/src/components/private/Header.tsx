@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       <header className="home-header">
         <h2>Aurora</h2>
         <button onClick={handleLogout} className="logout-button">
-          <img src={logOutIcon}/>
+          {auth.isAuthenticated && <img src={logOutIcon}/>}
         </button>
       </header>
     </div>

@@ -1,10 +1,11 @@
 .profile-container {
-    max-width: 600px;
+    /* max-width: 600px; */
     margin: 0 auto;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f9f9f9;
+    display: flex;
   }
   
   .profile-info {
@@ -26,5 +27,7 @@
   
   .profile-info a:hover {
     text-decoration: underline;
-  }
+  } 
+
+  
   

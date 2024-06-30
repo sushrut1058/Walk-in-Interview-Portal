@@ -27,6 +27,7 @@ const Room: React.FC = () => {
   const [mute, setMute] = useState(true);
   const [video, setVideo] = useState(true);
   const [partnerVideoState, setPartnerState] = useState(true);
+  const [startCallButton,showStartCall] = useState(false);
 
   const getUserMedia = async () => {    
     try{
@@ -46,33 +47,55 @@ const Room: React.FC = () => {
     const token = localStorage.getItem("access");
     let namespace = "room";
 
-    socket.current = io(`http://localhost:8000/${namespace}`,{
+    socket.current = io(`http://localhost:5000/${namespace}`,{
       query: {token}
     });
 
+    socket.current.emit("joinRoom", roomId);
+
     socket.current.on("unauthorized",()=>window.location.href=`/waiting/${roomId}`);
-    socket.current.on("authorized",(role)=>{
+    var res;
+    socket.current.on("authorized", async (role)=>{
       setAllowed(true);
       setMaster(role===2);
-      getUserMedia();
+      await getUserMedia();
+
+      
+      if(auth.user.role===1){
+        console.log("attendeventsent");
+        socket.current?.emit("attendee-joined");
+      }
+
     });
+    
     socket.current.on("offer", handleReceiveCall);
     socket.current.on("answer", handleAnswer);
     socket.current.on("ice-candidate",handleNewICECandidateMsg);
     socket.current.on("toggle-video", handlePartnerVideo);
+    socket.current.on("error", handleError);
 
-    socket.current.emit("joinRoom", roomId);
+    socket.current.on("attendee-joined", startCallCue);
 
     return () => {
       socket.current?.disconnect();
       stopCamera();
     }
 
-  },[]);
+  },[allowed]);
+
+  const handleError = (payload: any)=>{
+    console.log(payload);
+  }
+
+  const startCallCue = (payload: any) => {
+    otherUser.current = payload;
+    showStartCall(true);
+  }
 
   //socket event handler
   const handleReceiveCall = async (incoming : any) => {
     setPeerVideoStarted(true);
+    console.log("Received call");
     otherUser.current = incoming.caller;
     peerRef.current = createPeer();
     // peerRef.current.ontrack = handleTrackEvent;
@@ -92,6 +115,7 @@ const Room: React.FC = () => {
 
   //socket event handler
   const handleAnswer = (message : any) => {
+    console.log("Received Answer");
     const desc = new RTCSessionDescription(message.sdp);
     peerRef.current?.setRemoteDescription(desc).catch(e => console.log(e));
   }
@@ -107,6 +131,8 @@ const Room: React.FC = () => {
   //feature
   const callUser = async (userId : any) => {
     setPeerVideoStarted(true);
+    showStartCall(false);
+    console.log("calling callUser with userId:", userId)
     peerRef.current = createPeer(userId);
     if (userStreamRef.current){
       const userStreamTemp = userStreamRef.current;
@@ -216,24 +242,36 @@ const Room: React.FC = () => {
   }
 
   const saveUser = async () => {
-    if (otherUser.current){
-      const token = await localStorage.getItem('token');
-      const response = await axios.post("http://localhost:8000/actions/saveUser", {
-        headers: {
-          "Authorization":`Bearer ${token}`
-        },
-        body: {
+    try{
+      if (otherUser.current){
+        const token = await localStorage.getItem('access');
+        const response = await axios.post("http://localhost:5000/actions/save", {
           'userId': otherUser.current
+        },{
+          headers:{
+              "Authorization": `Bearer ${token}`
+          }
+        })
+        console.log(response.data);
+        if(response.status==201) {
+          alert("Saved user");
         }
-      })
+      }
+    } catch (e) {
+      alert("Error saving user");
     }
   }
 
-  // handlePartner
   const handlePartnerVideo = () => {
     console.log("handlePartnerVideoState");
     setPartnerState(!partnerVideoState);
   }
+  
+
+  if (auth.isLoading){
+    return <div>Loading...</div>
+  }
+  
 
   return (
     <div>
@@ -264,7 +302,11 @@ const Room: React.FC = () => {
             
             
             <div>
-            <button onClick={()=>callUser(2)}>Call</button>
+            {startCallButton && 
+            <div>
+              <h5>The attendee is in the room, click the button below to start the call</h5>
+              <button onClick={()=>callUser(otherUser.current)}>Start Call</button> 
+            </div>} 
           </div>
           </div>
         )

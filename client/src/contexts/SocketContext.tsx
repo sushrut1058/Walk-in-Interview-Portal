@@ -21,9 +21,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       socket.disconnect();
     }
     const token = localStorage.getItem('access');
-    // Assuming your server is on localhost:8000
+    // Assuming your server is on localhost:5000
     try{
-        const newSocket = io(`http://localhost:8000/${namespace}`,{
+        const newSocket = io(`http://localhost:5000/${namespace}`,{
             query:{token}
         });
         setSocket(newSocket);

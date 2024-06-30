@@ -27,7 +27,7 @@ const Profile: React.FC<props> = ({userId}) => {
     const fetchProfile = async () => {
         try {
             const token = await localStorage.getItem('access');
-            const response = await axios.get(`http://localhost:8000/actions/profile/${userId}`, {
+            const response = await axios.get(`http://localhost:5000/actions/profile/${userId}`, {
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
@@ -46,7 +46,7 @@ const Profile: React.FC<props> = ({userId}) => {
         }
         try {
           const token = await localStorage.getItem('access');
-          const response = await axios.get(`http://localhost:8000/actions/cv/${userId}`, {
+          const response = await axios.get(`http://localhost:5000/actions/cv/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`
             },

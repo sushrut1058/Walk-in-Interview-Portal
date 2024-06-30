@@ -9,7 +9,7 @@ import "./css/Recruiter.css"
 import RoomHistory from "./Home/RoomHistory";
 import Profile from "./Profile";
 
-const sock_url = "http://localhost:8000";
+const sock_url = "http://localhost:5000";
 
 const Recruiter: React.FC = () => {
   

@@ -40,7 +40,7 @@ const Onboard: React.FC = () => {
         formData.append('github', userData.github || '');
         formData.append('cv', userData.cv as Blob);
         console.log(formData);
-        const response = await fetch('http://localhost:8000/acc/onboard',{
+        const response = await fetch('http://localhost:5000/acc/onboard',{
             method: "POST",
             headers:{
               Authorization : `Bearer ${token}`

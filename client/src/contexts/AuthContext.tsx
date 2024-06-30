@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     setIsLoading(true);
     const token = localStorage.getItem('access');
     try {
-        const response = await fetch('http://localhost:8000/acc/validate_token/', {
+        const response = await fetch('http://localhost:5000/acc/validate_token/', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: JSON.stringify({ token }),
