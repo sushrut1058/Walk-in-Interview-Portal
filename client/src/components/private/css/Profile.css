@@ -1,33 +1,109 @@
 .profile-container {
-    /* max-width: 600px; */
-    margin: 0 auto;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    display: flex;
-  }
-  
-  .profile-info {
-    font-family: Arial, sans-serif;
-  }
-  
-  .profile-info p {
-    margin: 10px 0;
-  }
-  
-  .profile-info strong {
-    font-weight: bold;
-  }
-  
-  .profile-info a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .profile-info a:hover {
-    text-decoration: underline;
-  } 
+  color: black;
+  width: 100%;
+  /* height: 70%; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* padding: 40px; */
+  background-color: #000000;
 
-  
-  
+}
+
+.profile-header {
+  width: 37.09%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+  height: 13.24%;
+  align-self: center;
+  /* padding: 10px; */
+  /* margin-bottom: 20px; */
+}
+
+.profile-header span {
+  font-size: 1.68rem;
+}
+
+.edit-profile {
+  height: 9.46%;
+  left: 73%;
+  position: relative;
+  top: 1%;
+}
+
+.edit-profile button {
+  background: black;
+  border: 1px solid white;
+  color: #fff;
+  /* padding: 10px 20px; */
+  height: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  width: 23.07%;
+
+}
+
+.edit-profile button:hover {
+  background-color: #fff;
+  color: black;
+}
+
+.profile-details {
+  background-color: #000000;
+  color: white;
+  width: 40%;
+  /* left: 25%; */
+  top:8%;
+  /* display: flex; */
+  position: relative;
+  font-size: 1em;
+  left: 20%;
+  margin-top: 2%;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5%;
+  /* position: relative; */
+  /* padding: 10px 0; */
+}
+
+.detail-item .label {
+  font-weight: bold;
+}
+
+.detail-item .value a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.detail-item .value a::after {
+  content: '🔗';
+  margin-left: 5px;
+}
+
+.profile-details_root .display-picture {
+  background-color: #fff;
+  width: 15.77%;
+  height: 35%;
+  margin-right: 20px;
+  left:78.85%;
+  margin-top: 2%;
+  display: block;
+  position: absolute;
+}
+
+.profile-details_root{
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: flex-start;
+  display: flex;
+}

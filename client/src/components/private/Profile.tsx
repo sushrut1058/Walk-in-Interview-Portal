@@ -67,28 +67,56 @@ const Profile: React.FC<props> = ({userId}) => {
     },[])
 
     return(
-    <div className="profile-container">
+    <>
     {userData && (
-      <div className="profile-info">
-        
-        <p><strong>First Name:</strong> {userData.first_name}</p>
-        <p><strong>Last Name:</strong> {userData.last_name}</p>
-        <p><strong>Company:</strong> {userData.company}</p>
-        <p><strong>LinkedIn:</strong> {userData.linkedin ? <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">{userData.linkedin}</a> : 'N/A'}</p>
-        <p><strong>GitHub:</strong> {userData.github ? <a href={userData.github} target="_blank" rel="noopener noreferrer">{userData.github}</a> : 'N/A'}</p>
-          <div>
-            <strong>Resume:</strong> <i onClick={fetchCv}>View Resume</i>
-          </div>
-        {cvBlobUrl && (
-        <div className="cv-container">
-          <object data={cvBlobUrl} type="application/pdf" width="100%" height="500px">
-            <p>Your browser does not support PDFs. <a href={cvBlobUrl}>Download the PDF</a>.</p>
-          </object>
+      <div className="profile-container">
+        <div className="profile-header">
+            <span>Profile</span>
         </div>
-        )}
+        <span className='edit-profile'>
+            <button>Edit Profile</button>
+          </span>
+        <div className="profile-details_root">
+          
+          <div className='profile-details'>
+            <div className="detail-item">
+                <span className="label">Name:</span>
+                <span className="value">{userData.first_name}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">Email:</span>
+                <span className="value">sushrut1058@gmail.com</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">Company:</span>
+                <span className="value">{userData.company}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">LinkedIn:</span>
+                <span className="value">{userData.linkedin ? <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">Profile Link</a>: 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">Github:</span>
+                <span className="value">{userData.github ? <a href={userData.github} target="_blank" rel="noopener noreferrer">Github Link</a> : 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">CV:</span>
+                <span className="value"><a href="/" target="_blank" rel="noopener noreferrer">CV Link</a></span>
+            </div>
+            {cvBlobUrl && (
+            <div className="cv-container">
+              <object data={cvBlobUrl} type="application/pdf" width="100%" height="500px">
+                <p>Your browser does not support PDFs. <a href={cvBlobUrl}>Download the PDF</a>.</p>
+              </object>
+            </div>
+            )}
+          </div>
+          <span className='display-picture'></span>
+        </div>
+        
       </div>
     )}
-    </div>
+    </>
     )
 }
 
