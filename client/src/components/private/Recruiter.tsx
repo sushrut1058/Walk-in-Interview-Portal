@@ -40,6 +40,8 @@ const Recruiter: React.FC = () => {
             return <History />;
         case 'Settings':
             return <Settings />;
+        case 'Create Room':
+            return <CreateRoom />
         default:
             return <Profile userId={user.id}/>;
     }

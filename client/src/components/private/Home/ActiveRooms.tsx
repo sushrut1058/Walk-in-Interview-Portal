@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import '../css/ActiveRooms.css';
 
 interface Room{
   roomId: string,
   title: string,
-  duration: string
+  duration: string,
+  createdAt: string,
+  linkedin: string
 }
 
 const ActiveRooms: React.FC = () => {
@@ -30,18 +33,36 @@ const ActiveRooms: React.FC = () => {
 
   useEffect(()=>{checkActiveRooms()},[]);
 
-   return (
-    <div>
-      <h3>Available Rooms</h3>
-      <button onClick={checkActiveRooms}>Refresh!</button>
-      <ul>
-        {rooms?.map((room:Room) => (
-          <li key={room.roomId} onClick={()=>navigate(`/waiting/${room.roomId}`)}>
-            {room.title} - Duration:&nbsp; {room.duration}
-          </li>
+  return(
+    <div className="active-rooms-container">
+      <div className="active-rooms-header">
+          <span>Active Rooms</span>
+      </div>
+      <div className="refresh">
+        <button onClick={checkActiveRooms}>Refresh</button>
+      </div>
+      <table className="rooms-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Duration (hrs)</th>
+                <th>Created on</th>
+                <th>Created By</th>
+            </tr>
+        </thead>
+        <tbody>
+        {rooms?.map((room:Room, index: number) => (
+          <tr onClick={()=>navigate(`/waiting/${room.roomId}`)}>
+            <td>{index+1}</td>
+            <td>{room.title}</td>
+            <td>{room.duration}</td>
+            <td>{room.createdAt}</td>
+            <td><a href={room.linkedin}>Profile Link</a></td>
+          </tr>
         ))}
-      </ul>
-     
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -51,11 +51,23 @@ exports.createRoom = async (req, res) => {
             console.log("Good to go!, userID:", req.userId);
         }
 
+        const user_ = await User.findOne({
+            where: {
+                id: userId
+            }
+        });
+        if(!user_){
+            return res.status(400).json({ message: "Invalid room!" });
+        }else{
+            console.log("Good to go, found user");
+        }
+
         const newRoom = await Room.create({
             title:title,
             duration:duration,
             roomId:roomId,
-            userId:userId
+            userId:userId,
+            linkedin:user_.linkedin
         });
         res.status(201).json({message:'Room Created Successfully!', roomId: roomId})
     }catch (e){
