@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { useSocket } from "../../contexts/SocketContext";
 import CreateRoom from "./Home/CreateRoom";
-import axios from "axios";
-import Container from "./Container";
 import ActiveRooms from "./Home/ActiveRooms";
 import "./css/Recruiter.css"
-import RoomHistory from "./Home/RoomHistory";
 import Profile from "./Profile";
 import History from "./History";
 import Settings from "./Settings";

@@ -9,6 +9,7 @@ import PublicRoute from './contexts/PublicRoute';
 import Room from './user/Room';
 import WaitingArena from './user/WaitingArena';
 import { SocketProvider } from './contexts/SocketContext';
+import CVviewer from './components/private/CVviewer';
 
 const SocketLayout: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ const App : React.FC = () => {
           <Route path="/" element={<PublicRoute component={Landing} />} />
           <Route path="/room/:roomId" element={<ProtectedRoute component={Room} />} />
           <Route path="/waiting/:roomId" element={<ProtectedRoute component={WaitingArena} />} />
+          <Route path="/cv" element={<ProtectedRoute component={CVviewer}/>} />
         </Routes> 
         </AuthProvider>
       </BrowserRouter>

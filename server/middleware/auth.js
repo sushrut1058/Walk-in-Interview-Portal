@@ -17,8 +17,7 @@ exports.authenticate_lv1 = (req, res, next) => {
 exports.authenticate = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(" ")[1]; // Assuming Bearer token format
-        const decoded = jwt.verify(token, 'secret'); // Replace 'secret' with your secret key or use environment variables
-
+        const decoded = await jwt.verify(token, 'secret'); // Replace 'secret' with your secret key or use environment variables
         req.userId = decoded.id; // Add the user ID to the request object
         req.role = decoded.role;
         const user = await User.findByPk(decoded.id);

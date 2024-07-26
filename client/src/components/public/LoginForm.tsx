@@ -8,7 +8,7 @@ const LoginForm: React.FC = () => {
   const auth = useAuth();
 
   const handleSubmit = async (event: React.FormEvent) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     try{
       const response = await fetch('http://localhost:5000/acc/login', {
@@ -35,12 +35,15 @@ const LoginForm: React.FC = () => {
   };
 
   return (
+    <form onSubmit={handleSubmit}>
     <div className="form-container">
       <div className="title">Sign in to the portal</div>
+      
       <input type="email" value={email} placeholder="Email" onChange={e => setEmail(e.target.value)} />
       <input type="password" value={password} placeholder="Password" onChange={e => setPassword(e.target.value)} />
-      <button onClick={handleSubmit}>Sign In</button>
+      <button type="submit" className='login-btn' onClick={handleSubmit}>Sign In</button>
     </div>
+    </form>
   );
 };
 

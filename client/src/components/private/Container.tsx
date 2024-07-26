@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import axios from "axios";
 
 interface ContainerProps {
   activeComponent: React.ReactElement | undefined;

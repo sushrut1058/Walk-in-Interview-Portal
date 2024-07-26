@@ -99,7 +99,7 @@ exports.getHistory = async (req,res) => {
     }
 }
 
-exports.fetchProfile = async (req, res) => {
+exports.fetchPartialProfile = async (req, res) => {
     const {userId} = req.params;
     console.log("userid:",userId);
     if (req.userId!==userId && req.role!==2){
@@ -112,7 +112,7 @@ exports.fetchProfile = async (req, res) => {
             }
         });
         if (user){
-            return res.status(200).json({first_name: user.first_name, last_name: user.last_name, company: user.company, linkedin: user.linkedin, github: user.github});
+            return res.status(200).json({first_name: user.first_name, last_name: user.last_name, company: user.company, linkedin: user.linkedin, github: user.github, cv: user.cv});
         }else{
             return res.status(404).json({message: "Can't find the profile"});
         }

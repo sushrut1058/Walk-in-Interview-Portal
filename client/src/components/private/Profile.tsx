@@ -4,11 +4,12 @@ import axios from 'axios';
 import './css/Profile.css';
 
 interface profileInfo {
-    first_name: string | null;
-    last_name: string | null;
-    company: string | null;
-    linkedin: string | null;
-    github: string | null;
+    first_name: string;
+    last_name: string;
+    email: string;
+    company: string;
+    linkedin: string;
+    github: string;
 }
 
 interface props {
@@ -18,6 +19,7 @@ const Profile: React.FC<props> = ({userId}) => {
     const [userData, setUserData] = useState<profileInfo>({
         first_name: '',
         last_name: '',
+        email: '',
         company:'',
         linkedin:'',
         github:''
@@ -27,7 +29,7 @@ const Profile: React.FC<props> = ({userId}) => {
     const fetchProfile = async () => {
         try {
             const token = await localStorage.getItem('access');
-            const response = await axios.get(`http://localhost:5000/actions/profile/${userId}`, {
+            const response = await axios.get(`http://localhost:5000/profile`, {
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
@@ -81,11 +83,11 @@ const Profile: React.FC<props> = ({userId}) => {
           <div className='profile-details'>
             <div className="detail-item">
                 <span className="label">Name:</span>
-                <span className="value">{userData.first_name}</span>
+                <span className="value">{userData.first_name+' '+userData.last_name}</span>
             </div>
             <div className="detail-item">
                 <span className="label">Email:</span>
-                <span className="value">sushrut1058@gmail.com</span>
+                <span className="value">{userData.email}</span>
             </div>
             <div className="detail-item">
                 <span className="label">Company:</span>
@@ -101,15 +103,8 @@ const Profile: React.FC<props> = ({userId}) => {
             </div>
             <div className="detail-item">
                 <span className="label">CV:</span>
-                <span className="value"><a href="/" target="_blank" rel="noopener noreferrer">CV Link</a></span>
+                <span className="value"><a href="/cv" target="_blank" rel="noopener noreferrer">CV Link</a></span>
             </div>
-            {cvBlobUrl && (
-            <div className="cv-container">
-              <object data={cvBlobUrl} type="application/pdf" width="100%" height="500px">
-                <p>Your browser does not support PDFs. <a href={cvBlobUrl}>Download the PDF</a>.</p>
-              </object>
-            </div>
-            )}
           </div>
           <span className='display-picture'></span>
         </div>

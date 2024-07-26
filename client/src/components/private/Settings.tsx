@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import logOutIcon from "../../static/logout.png"
 import "./css/Settings.css"
 
 interface User{
-  first_name: string | null;
-  last_name: string | null;
-  company: string | null;
-  linkedin: string | null;
-  github: string | null;
-  email: string | null;
-  cv: File | null;
-  companyLinkedin: string | null;
+  first_name: string;
+  last_name: string;
+  company: string;
+  linkedin: string;
+  github: string;
+  email: string;
+  // cv: File | null;
+  companyLinkedin: string;
 }
 
 const Settings = () => {
@@ -24,20 +25,37 @@ const Settings = () => {
     company: '',
     linkedin: '',
     github: '',
-    cv: null,
+    // cv: null,
     companyLinkedin: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files } = e.target;
-    if (name==='cv' && files){
-      setUserData((prevData) => ({ ...prevData, [name]: files[0] }));
-    }else{
-      setUserData((prevData) => ({ ...prevData, [name]: value }));
-    }
+    const { name, value } = e.target;
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+    console.log(userData, name, value);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try{
+      const token = localStorage.getItem('access');
+      console.log(token);
+      const response = await axios.post("http://localhost:5000/update", {
+        ...userData
+      }, {
+        headers:{
+          "Authorization":`Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if(response.status===404 || response.status===500){
+        console.log(response.data.message, response.data);
+      }else{
+        console.log("Successfully updated profile: ",response.data);
+      }
+    }catch(e){
+      console.log(e);
+    }
     
   }
 
@@ -52,8 +70,9 @@ const Settings = () => {
       <div className="form-group">
         <input
             type="text"
-            id="first-name"
-            value={userData.first_name || ''}
+            id="first_name"
+            value={userData.first_name}
+            name="first_name"
             onChange={handleInputChange}
             placeholder="First Name"
             className="form-input"
@@ -62,8 +81,9 @@ const Settings = () => {
       <div className="form-group">
         <input
             type="text"
-            id="last-name"
-            value={userData.last_name || ''}
+            id="last_name"
+            value={userData.last_name}
+            name="last_name"
             onChange={handleInputChange}
             placeholder="Last Name"
             className="form-input"
@@ -73,7 +93,8 @@ const Settings = () => {
         <input
             type="text"
             id="email"
-            value={userData.email || ''}
+            name="email"
+            value={userData.email}
             onChange={handleInputChange}
             placeholder="Email"
             className="form-input"
@@ -83,7 +104,8 @@ const Settings = () => {
         <input
             type="text"
             id="company"
-            value={userData.company || ''}
+            name="company"
+            value={userData.company}
             onChange={handleInputChange}
             placeholder="Company"
             className="form-input"
@@ -93,8 +115,9 @@ const Settings = () => {
         <input
             type="text"
             id="linkedin"
-            value={userData.linkedin || ''}
+            name="linkedin"
             onChange={handleInputChange}
+            value={userData.linkedin}
             placeholder="LinkedIn"
             className="form-input"
         />
@@ -102,22 +125,12 @@ const Settings = () => {
       <div className="form-group">
         <input
             type="text"
-            id="company"
-            value={userData.github || ''}
+            id="github"
+            name="github"
+            value={userData.github}
             onChange={handleInputChange}
             placeholder="Github"
             className="form-input"
-        />
-      </div>
-      <div className="form-group">
-      <label htmlFor="cv" className="cv-label">Upload CV</label>
-        <input
-            type="file"
-            id="cv"
-            onChange={handleInputChange}
-            className="cv-input"
-            accept=".pdf"
-            name="cv"
         />
       </div>
       <button className="create-room-btn" name="submit" onClick={handleSubmit}>Update</button>
