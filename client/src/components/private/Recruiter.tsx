@@ -30,7 +30,7 @@ const Recruiter: React.FC = () => {
     switch (activeComponent) {
         case 'Profile':
             return <Profile userId={user.id}/>;
-        case 'ActiveRooms':
+        case 'Active Rooms':
             return <ActiveRooms />;
         case 'History':
             return <History />;
@@ -42,17 +42,12 @@ const Recruiter: React.FC = () => {
             return <Profile userId={user.id}/>;
     }
   };
-
-  const handleCompSwitch = (component: React.ReactElement, buttonId: string) => {
-    setActiveComp(component);
-    setActiveButton(buttonId);
-  };
   
   return (
     <div className="recruiter_home">
       <Header/>
       <div className="recruiter_main-content">
-        <SideBar setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
+        <SideBar setActiveComponent={setActiveComponent} activeComponent={activeComponent} compList={["Profile", "Create Room","Active Rooms", "History", "Settings"]} />
         <div className="recruiter_content">
             {renderComponent()}
         </div>

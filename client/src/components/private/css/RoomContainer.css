@@ -1,0 +1,47 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .overlay-content {
+    /* background-color: white; */
+    padding: 20px;
+    border-radius: 10px;
+    top:15%;
+    left:10%;
+    width: 50%;
+    height: 100%;
+    /* height: 100%; */
+    position: relative;
+  }
+  
+  .close-button {
+    position: relative;
+    
+    /* top: 10px; */
+    /* left: 50%; */
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color:white;
+    top: 25%;
+    left: 25%;
+  }
+  
+.close-button-container {
+    position: absolute;
+    background-color:#232424;
+    height: 5%;
+    width: 5%;
+    border-radius: 10px;
+    align-items: center;
+}

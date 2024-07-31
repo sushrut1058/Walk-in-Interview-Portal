@@ -1,0 +1,85 @@
+.WaitingContainer-container {
+    color: black;
+    width: 100%;
+    /* height: 70%; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* padding: 40px; */
+    height: 70.6%;
+    background-color: #000000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
+.WaitingContainer-header {
+    width: 37.09%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    height: 13.24%;
+    align-self: center;
+}
+
+.WaitingContainer-header span {
+    font-size: 1.68rem;
+}
+
+.refresh{
+    /* position: relative; */
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 9.46%;
+    align-self: center;
+}
+
+.refresh button {
+    background: black;
+    border: 1px solid white;
+    color: #fff;
+    height: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.refresh button:hover {
+    background-color: #fff;
+    color: black;
+}
+
+.WaitingContainer-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #000000;
+}
+
+.WaitingContainer-table thead th {
+    background-color: #333333;
+    color: white;
+    height: 5.35vh;
+    /* padding: 10px; */
+}
+
+.WaitingContainer-table tbody td {
+    color: white;
+    /* padding: 10px; */
+    height: 5.35vh;
+    text-align: center;
+}
+
+.WaitingContainer-table tbody tr {
+    background-color: #170E0E;
+}
+
+.WaitingContainer-table tbody tr:hover {
+    background-color: #fff;
+    
+}
+
+.WaitingContainer-table tbody tr:hover td{
+    color: #170E0E;
+}

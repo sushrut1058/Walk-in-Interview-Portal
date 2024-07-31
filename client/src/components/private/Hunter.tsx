@@ -39,17 +39,12 @@ const Recruiter: React.FC = () => {
             return <Profile userId={user.id}/>;
     }
   };
-
-  const handleCompSwitch = (component: React.ReactElement, buttonId: string) => {
-    setActiveComp(component);
-    setActiveButton(buttonId);
-  };
   
   return (
     <div className="recruiter_home">
       <Header/>
       <div className="recruiter_main-content">
-        <SideBar setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
+        <SideBar setActiveComponent={setActiveComponent} activeComponent={activeComponent} compList={["Profile","Active Rooms", "History", "Settings"]}/>
         <div className="recruiter_content">
             {renderComponent()}
         </div>
