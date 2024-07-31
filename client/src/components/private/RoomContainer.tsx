@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback, Component } from 'reac
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Socket, io } from 'socket.io-client';
-import Container from './Container';
 import axios from 'axios';
 import './css/RoomContainer.css';
 import WaitingContainer from './WaitingContainer';
@@ -276,64 +275,47 @@ const RoomContainer: React.FC<props> = ({roomId}: props) => {
   }
   
 
-  return (
-    <div>
-    <div className='room-container'>
-    {showOverlay && (
-  <div className="overlay">
-    <div className="overlay-content">
-    <div className='close-button-container'>
-      <button className="close-button" onClick={toggleOverlay}>x</button>
-      </div>
-      <WaitingContainer roomId={roomId} />
-    </div>
-  </div>
-)}
-
-      <div className='video-and-controls'>
-      <h1>Welcome to Room {roomId}</h1>
-      {allowed && 
-        (
-          <div>
-            
-            {peerVideoStarted && (
-            <div>  
-              <h3>Peer</h3>
-              <video ref={partnerVideo} autoPlay playsInline />
-              <button onClick={saveUser}>Save User</button>
-            </div>
+  return (        
+        <div className='room-container'>
+            {showOverlay && (
+                <div className="overlay">
+                <div className="overlay-content">
+                    <div className='close-button-container'>
+                    <button className="close-button" onClick={toggleOverlay}>x</button>
+                    </div>
+                    <WaitingContainer roomId={roomId} />
+                </div>
+                </div>
             )}
-            
-            <h3>Me</h3>
-            <div className="video-container">
-              <video ref={userVideo} autoPlay playsInline />
-              <div className="controls-overlay">
-                <button onClick={toggleMute}>Toggle Mute</button>
-                <button onClick={toggleVideo}>Toggle Video</button> 
-              </div>
-            </div>
-            
-            
-            <div>
-            {startCallButton && 
-            <div>
-              <h5>The attendee is in the room, click the button below to start the call</h5>
-              <button onClick={()=>callUser(otherUser.current)}>Start Call</button> 
-            </div>} 
+            <div className="video-wrapper">
+                {(allowed) && (
+                    <div className="partner-video-container">
+                    <video ref={partnerVideo} autoPlay playsInline className="partner-video" />
+                    <button onClick={saveUser} className="save-user-button">Save</button>
+                    </div>
+                )}
+                {allowed && (
+                <div className="user-video-container">
+                    <video ref={userVideo} autoPlay playsInline className="user-video" />
+                    <div className="controls-overlay">
+                    <button onClick={toggleMute} className="control-button">Mute</button>
+                    <button onClick={toggleVideo} className="control-button">Video</button>
+                    </div>
+                </div>
+                )}
+                {master && (
+                    <div className="waiting">
+                    <button onClick={showWaiting} className="waiting-arena-btn">Waiting Arena</button>
+                    </div>
+                )}
+                {startCallButton && (
+                    <div className="start-call">
+                    <h5>The attendee is in the room, start the call?</h5>
+                    <button className="start-call-button" onClick={() => callUser(otherUser.current)}>Start Call</button>
+                    </div>
+                )}
           </div>
-          </div>
-        )
-      }
-      </div>
-      {master && 
-        (
-          <div className="waiting">
-            <button onClick={showWaiting} className="waiting-arena-btn">Waiting Arena</button>
-          </div>
-        )
-      }      
-    </div>
-    </div>
+        </div>
   );
 };
 
