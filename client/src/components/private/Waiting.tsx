@@ -13,13 +13,13 @@ interface User{
 interface WaitingProps{
   roomId: string | undefined ;
   updateUser_callback: (users: User[]) => void;
-  // sendInvite_callback: (userId: string) => void;
+  setSendInvite?: (sendInvite: (userId: string) => void) => void; // Function to set sendInvite in parent
   // showProfile_callback: (userId: string) => void; 
 }
 
 const sock_url = "http://localhost:5000";
 
-const Waiting: React.FC<WaitingProps> = ({roomId, updateUser_callback}) => {
+const Waiting: React.FC<WaitingProps> = ({roomId, updateUser_callback, setSendInvite}) => {
   const [users, setUsers] = useState<User[]>([]);
   const socket = useRef<Socket | null>(null);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
@@ -36,14 +36,12 @@ const Waiting: React.FC<WaitingProps> = ({roomId, updateUser_callback}) => {
     }
   }
 
-  const showProfile = (userId: string) => {
-    setSelectedUser(null);
-    setSelectedUser(userId);
-  }
-
-  const closeProfile = () => {
-    setSelectedUser(null);
-  }
+  useEffect (()=>{
+      if(setSendInvite) {
+        setSendInvite(()=>sendInvite);
+        console.log("SendInvite was set");
+      }
+  }, [socket.current]);
 
   useEffect(()=>{
     if (socket.current) {
@@ -74,32 +72,6 @@ const Waiting: React.FC<WaitingProps> = ({roomId, updateUser_callback}) => {
     }
   },[]);
 
-  // return (
-  //     <div className='waitingContainer'>
-  //       <ul>
-  //         {users.map(user=>(
-  //           <li key={user.id}>
-  //             <span className="title">
-  //               {user.id} : {user.first_name}
-  //             </span>
-  //             {auth.user.role==2 && (
-  //               <span className='btns'> 
-  //                 <button onClick={()=>sendInvite(user.id)}>Invite</button> 
-  //                 <button onClick={()=>setSelectedUser(user.id)}>Profile</button>
-  //               </span>
-  //             )}
-  //           </li>
-  //         ))}
-  //       </ul>
-  //       <div className='ProfileComp'>
-  //       {selectedUser && 
-  //         <div>
-  //           <button onClick={closeProfile}>Back</button>
-  //           <Profile userId={selectedUser}/>
-  //         </div>}
-  //       </div>
-  //     </div>
-  // );
   return null;
 };
 

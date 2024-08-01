@@ -23,6 +23,7 @@
     text-align: center;
     height: 13.24%;
     align-self: center;
+    box-shadow: 0 0 3px white;
 }
 
 .history-header span {

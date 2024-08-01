@@ -5,6 +5,7 @@ import { Socket, io } from 'socket.io-client';
 import axios from 'axios';
 import './css/RoomContainer.css';
 import WaitingContainer from './WaitingContainer';
+import WaitingBox from './WaitingBox';
 
 interface props{
     roomId: string | undefined;
@@ -283,7 +284,7 @@ const RoomContainer: React.FC<props> = ({roomId}: props) => {
                     <div className='close-button-container'>
                     <button className="close-button" onClick={toggleOverlay}>x</button>
                     </div>
-                    <WaitingContainer roomId={roomId} />
+                    <WaitingBox roomId={roomId} />
                 </div>
                 </div>
             )}
