@@ -57,8 +57,9 @@ const CreateRoom: React.FC = () => {
                     className="custom-dropdown"
                 >
                     <option value="#" >Duration</option>
-                    <option value="1">1hr</option>
-                    <option value="2">2hr</option>
+                    <option value="0.5">30 minutes</option>
+                    <option value="0.75">45 minutes</option>
+                    <option value="1">1 hour</option>
                 </select>
             </div>
             <button className="create-room-btn" type="submit">Create Room</button>

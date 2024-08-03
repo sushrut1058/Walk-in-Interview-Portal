@@ -3,6 +3,9 @@ const User = require('../../models/User');
 const Room = require('../../models/Room');
 const Candidate = require('../../models/Candidate');
 const { v4: uuidv4 } = require('uuid'); 
+const cron = require('node-cron');
+const schedule = require('node-schedule');
+
 
 exports.saveUser = async (req, res) => {
     try{
@@ -41,7 +44,7 @@ exports.createRoom = async (req, res) => {
     const userId = req.userId
     try{
         const existingRoom = await Room.findOne({ 
-            where: { 
+            where: {
                 userId: userId
             } 
         });
@@ -61,6 +64,7 @@ exports.createRoom = async (req, res) => {
         }else{
             console.log("Good to go, found user");
         }
+        
 
         const newRoom = await Room.create({
             title:title,
@@ -69,12 +73,38 @@ exports.createRoom = async (req, res) => {
             userId:userId,
             linkedin:user_.linkedin
         });
-        res.status(201).json({message:'Room Created Successfully!', roomId: roomId})
+        destroyRoom(roomId, Date.now()+duration*3600*1000);
+
+        res.status(201).json({message:'Room Created Successfully!', roomId: roomId});
+        
     }catch (e){
         console.log("Error creating room", e);
         res.status(500).json({message:'Something went wrong while creating the room'});
     }
 }
+
+function destroyRoom(roomId, expirationTime) {
+    console.log("Creating Job at:", new Date().toISOString());
+    console.log("RoomId:", roomId);
+    console.log("Expiration Time:", new Date(expirationTime).toISOString());
+
+    schedule.scheduleJob(expirationTime, async () => {
+        try {
+            const [affectedRows] = await Room.update({ active: false }, {
+                where: { roomId: roomId }
+            });
+            console.log("Affected Rows:", affectedRows);
+            if (affectedRows) {
+                console.log(`Room for RoomId ${roomId} deactivated at:`, new Date().toISOString());
+            } else {
+                console.log(`No active room found for RoomId ${roomId} at:`, new Date().toISOString());
+            }
+        } catch (e) {
+            console.error(`Error updating room for RoomId ${roomId} at:`, new Date().toISOString(), e);
+        }
+    });
+}
+  
 
 exports.getActiveRooms = async (req,res) => {
     try{
@@ -88,12 +118,12 @@ exports.getActiveRooms = async (req,res) => {
 
 exports.getHistory = async (req,res) => {
     try{
-        const history = await Rooms.findAll({
+        const history = await Room.findAll({
             where:{
-                is_active: false
+                active: false
             }
         })
-        return res.status(200).json({message: history});
+        return res.status(200).json(history);
     } catch (e) {
         res.status(500).json({message:"Error fetching rooms"});
     }

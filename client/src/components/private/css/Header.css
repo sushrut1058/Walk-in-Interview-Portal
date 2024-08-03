@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   /* padding: 10px 20px; */
+  box-shadow: 0 0 10px black;
   height: 15vh;
   width: 100%;
 }

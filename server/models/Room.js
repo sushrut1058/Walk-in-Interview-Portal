@@ -21,6 +21,11 @@ Room.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
+    active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
+    },
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -28,12 +33,7 @@ Room.init({
         references: {
             model: 'Users', // This should match the table name of the User model
             key: 'id'
-        },
-    is_active: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true
-    }
+        }
     }
 }, {
     sequelize,

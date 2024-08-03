@@ -31,7 +31,7 @@ const History: React.FC = () => {
     }
   }
 
-  useEffect(()=>{getHistory()},[]);
+  useEffect(()=>{getHistory();},[]);
 
   return(
     <div className="history-container">
