@@ -29,7 +29,7 @@ const Recruiter: React.FC = () => {
     switch (activeComponent) {
         case 'Profile':
             return <Profile userId={user.id}/>;
-        case 'ActiveRooms':
+        case 'Active Rooms':
             return <ActiveRooms />;
         case 'History':
             return <History />;
