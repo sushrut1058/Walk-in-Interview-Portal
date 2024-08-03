@@ -3,22 +3,32 @@ import LoginForm from '../components/public/LoginForm';
 import SignupForm from '../components/public/SignupForm';
 import './Landing.css';  // Import the CSS for styling
 import Header from '../components/private/Header';
+import Logo from '../static/logo.png';
 
 const Landing: React.FC = () => {
+
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
   return (
-    <div>
-      <Header/>
-      <div className="landing-container">
-        <div className="signup-container">
-          <h2 className="form-title">Sign Up</h2>
-          <SignupForm />
+      <div className="home-page">
+        <div className="left-panel">
+          <div className="logo"> 
+            <img src={Logo}/>
+            <span>sawdust</span>
+          </div>
+          <div className="tagline">The one-stop platform that lands you your dream job</div>
+          {!isSigningUp ? (
+            <button onClick={() => setIsSigningUp(true)}>Join the race</button>
+          ):(
+            <button onClick={() => setIsSigningUp(false)}>Sign In</button>
+          )
+        }
+          
         </div>
-        <div className="login-container">
-          <h2 className="form-title">Log In</h2>
-          <LoginForm />
+        <div className="right-panel">
+          {isSigningUp ? <SignupForm /> : <LoginForm />}
         </div>
       </div>
-    </div>
   );
 };
 

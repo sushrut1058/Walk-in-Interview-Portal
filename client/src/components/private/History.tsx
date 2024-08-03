@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import '../css/ActiveRooms.css';
+import './css/History.css';
 
 interface Room{
   roomId: string,
@@ -12,36 +12,36 @@ interface Room{
   linkedin: string
 }
 
-const ActiveRooms: React.FC = () => {
+const History: React.FC = () => {
   
   const auth = useAuth();
   const [rooms, setRooms] = useState<Room[]>([]);
   const navigate = useNavigate();
-  const checkActiveRooms = async () => {
+  const getHistory = async () => {
     try{
       const token = localStorage.getItem('access');
-      const response = await axios.get("http://localhost:5000/actions/active-rooms",{
+      const response = await axios.get("http://localhost:5000/actions/history",{
         headers:{
           "Authorization":`Bearer ${token}`
         }
       });
       setRooms(response.data);
     }catch (e) {
-      console.log("Can't load active rooms", e);
+      console.log("Can't load history", e);
     }
   }
 
-  useEffect(()=>{checkActiveRooms()},[]);
+  useEffect(()=>{getHistory()},[]);
 
   return(
-    <div className="active-rooms-container">
-      <div className="active-rooms-header">
-          <span>Active Rooms</span>
+    <div className="history-container">
+      <div className="history-header">
+          <span>History</span>
       </div>
       <div className="refresh">
-        <button onClick={checkActiveRooms}>Refresh</button>
+        <button onClick={getHistory}>Refresh</button>
       </div>
-      <table className="rooms-table">
+      <table className="history-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -53,7 +53,7 @@ const ActiveRooms: React.FC = () => {
         </thead>
         <tbody>
         {rooms?.map((room:Room, index: number) => (
-          <tr onClick={()=>navigate(`/waiting/${room.roomId}`)}>
+          <tr>
             <td>{index+1}</td>
             <td>{room.title}</td>
             <td>{room.duration}</td>
@@ -67,4 +67,4 @@ const ActiveRooms: React.FC = () => {
   );
 };
 
-export default ActiveRooms;
+export default History;

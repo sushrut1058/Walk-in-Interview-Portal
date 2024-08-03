@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { useSocket } from "../../contexts/SocketContext";
 import CreateRoom from "./Home/CreateRoom";
-import axios from "axios";
-import Container from "./Container";
 import ActiveRooms from "./Home/ActiveRooms";
 import "./css/Recruiter.css"
-import RoomHistory from "./Home/RoomHistory";
 import Profile from "./Profile";
+import History from "./History";
+import Settings from "./Settings";
+import SideBar from "./SideBar";
+import Header from "./Header";
 
 const sock_url = "http://localhost:5000";
 
@@ -17,34 +17,41 @@ const Recruiter: React.FC = () => {
   const [activeComp, setActiveComp] = useState<React.ReactElement>();
   const [activeButton, setActiveButton] = useState<string>('');
 
+  const [activeComponent, setActiveComponent] = useState<string|undefined>('Profile');
+
   if (isLoading){
     return <div>Loading...</div>
   }else{
     console.log("user.id:",user.id, isAuthenticated);
   }
   
-
-  const handleCompSwitch = (component: React.ReactElement, buttonId: string) => {
-    setActiveComp(component);
-    setActiveButton(buttonId);
+  
+  const renderComponent = () => {
+    switch (activeComponent) {
+        case 'Profile':
+            return <Profile userId={user.id}/>;
+        case 'Active Rooms':
+            return <ActiveRooms />;
+        case 'History':
+            return <History />;
+        case 'Settings':
+            return <Settings />;
+        case 'Create Room':
+            return <CreateRoom />
+        default:
+            return <Profile userId={user.id}/>;
+    }
   };
   
   return (
-    <div className="recruiter-page">
-        <div className="profile-section">
-          <h4>Profile</h4>
-          <Profile userId={user.id}/>
+    <div className="recruiter_home">
+      <Header/>
+      <div className="recruiter_main-content">
+        <SideBar setActiveComponent={setActiveComponent} activeComponent={activeComponent} compList={["Profile", "Create Room","Active Rooms", "History", "Settings"]} />
+        <div className="recruiter_content">
+            {renderComponent()}
         </div>
-        <div className="controls">
-          <div className="bar">
-            <button className={activeButton === 'create'? 'active': ''} onClick={() => handleCompSwitch(<CreateRoom/>, 'create')}>Create Room</button>
-            <button className={activeButton === 'active'? 'active': ''} onClick={() => handleCompSwitch(<ActiveRooms/>, 'active')}>Active rooms</button>
-            <button className={activeButton === 'history'? 'active': ''} onClick={() => handleCompSwitch(<RoomHistory/>, 'history')}>History</button> 
-          </div>
-          <div className="activeComponent">
-            <Container activeComponent={activeComp}/>
-          </div>
-        </div>
+      </div>
     </div>
   );
 };

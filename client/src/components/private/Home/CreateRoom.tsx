@@ -2,12 +2,13 @@ import React, {useState, useEffect } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import '../css/CreateRoom.css';
 
 const CreateRoom: React.FC = () => {
   
   const auth = useAuth();
   const [title, setTitle] = useState('');
-  const [duration, setDuration] = useState('30min');
+  const [duration, setDuration] = useState('#');
   const navigate = useNavigate();
   const handleSubmit = async (event: any) => {
     event.preventDefault(); // Prevent the form from submitting traditionally
@@ -33,30 +34,36 @@ const CreateRoom: React.FC = () => {
 };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <div className="create-room-container">
+            <div className="create-room-header">
+                <span>Create Room</span>
+            </div>
+            <form onSubmit={handleSubmit} className="create-room-form">
+            <div className="form-group">
                 <input
                     type="text"
                     id="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Room Title"
+                    className="form-input"
                 />
             </div>
-            <div>
-                <label htmlFor="duration">Duration: &nbsp;</label>
+            <div className="form-group">
                 <select
                     id="duration"
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
                     className="custom-dropdown"
                 >
-                    <option value="30min">30min</option>
-                    <option value="60min">60min</option>
+                    <option value="#" >Duration</option>
+                    <option value="1">1hr</option>
+                    <option value="2">2hr</option>
                 </select>
-            </div><br/>
-            <button className="create-room" type="submit">Create Room</button>
-        </form>
+            </div>
+            <button className="create-room-btn" type="submit">Create Room</button>
+            </form>
+        </div>
     );
 };
 

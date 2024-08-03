@@ -4,11 +4,12 @@ import axios from 'axios';
 import './css/Profile.css';
 
 interface profileInfo {
-    first_name: string | null;
-    last_name: string | null;
-    company: string | null;
-    linkedin: string | null;
-    github: string | null;
+    first_name: string;
+    last_name: string;
+    email: string;
+    company: string;
+    linkedin: string;
+    github: string;
 }
 
 interface props {
@@ -18,6 +19,7 @@ const Profile: React.FC<props> = ({userId}) => {
     const [userData, setUserData] = useState<profileInfo>({
         first_name: '',
         last_name: '',
+        email: '',
         company:'',
         linkedin:'',
         github:''
@@ -27,7 +29,7 @@ const Profile: React.FC<props> = ({userId}) => {
     const fetchProfile = async () => {
         try {
             const token = await localStorage.getItem('access');
-            const response = await axios.get(`http://localhost:5000/actions/profile/${userId}`, {
+            const response = await axios.get(`http://localhost:5000/profile`, {
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
@@ -67,28 +69,49 @@ const Profile: React.FC<props> = ({userId}) => {
     },[])
 
     return(
-    <div className="profile-container">
+    <>
     {userData && (
-      <div className="profile-info">
-        
-        <p><strong>First Name:</strong> {userData.first_name}</p>
-        <p><strong>Last Name:</strong> {userData.last_name}</p>
-        <p><strong>Company:</strong> {userData.company}</p>
-        <p><strong>LinkedIn:</strong> {userData.linkedin ? <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">{userData.linkedin}</a> : 'N/A'}</p>
-        <p><strong>GitHub:</strong> {userData.github ? <a href={userData.github} target="_blank" rel="noopener noreferrer">{userData.github}</a> : 'N/A'}</p>
-          <div>
-            <strong>Resume:</strong> <i onClick={fetchCv}>View Resume</i>
-          </div>
-        {cvBlobUrl && (
-        <div className="cv-container">
-          <object data={cvBlobUrl} type="application/pdf" width="100%" height="500px">
-            <p>Your browser does not support PDFs. <a href={cvBlobUrl}>Download the PDF</a>.</p>
-          </object>
+      <div className="profile-container">
+        <div className="profile-header">
+            <span>Profile</span>
         </div>
-        )}
+        <span className='edit-profile'>
+            <button>Edit Profile</button>
+          </span>
+        <div className="profile-details_root">
+          
+          <div className='profile-details'>
+            <div className="detail-item">
+                <span className="label">Name:</span>
+                <span className="value">{userData.first_name+' '+userData.last_name}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">Email:</span>
+                <span className="value">{userData.email}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">Company:</span>
+                <span className="value">{userData.company}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">LinkedIn:</span>
+                <span className="value">{userData.linkedin ? <a href={userData.linkedin} target="_blank" rel="noopener noreferrer">Profile Link</a>: 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">Github:</span>
+                <span className="value">{userData.github ? <a href={userData.github} target="_blank" rel="noopener noreferrer">Github Link</a> : 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+                <span className="label">CV:</span>
+                <span className="value"><a href="/cv" target="_blank" rel="noopener noreferrer">CV Link</a></span>
+            </div>
+          </div>
+          <span className='display-picture'></span>
+        </div>
+        
       </div>
     )}
-    </div>
+    </>
     )
 }
 

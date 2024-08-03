@@ -1,30 +1,22 @@
-.home-header {
-    /* padding: 10px 20px; */
-    background-color: #000000;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex:0.33;
-    height: 5%
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  }
-  
-  .logout-button {
-    padding: 5px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    width: 50px;
-  }
-  
-  .logout-button img {
-    width: 24px;  /* Small size for the icon */
-    height: 24px; /* Maintain aspect ratio */
-  }
-  
-  .content-area {
-    flex: 1;  /* Takes up the remaining space */
-    padding: 20px;
-  }
-  
+.header {
+  background-color: #000000;
+  color: white;
+  display: flex;
+  align-items: center;
+  /* padding: 10px 20px; */
+  height: 15vh;
+  width: 100%;
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  letter-spacing: 0.45em;
+}
+
+.header .logo img {
+  height: 8vh; /* Set the height to 8% of the viewport height */
+  margin-right: 10px;
+  margin-left: 15px;
+}

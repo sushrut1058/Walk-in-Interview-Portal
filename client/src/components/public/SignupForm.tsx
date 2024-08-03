@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../css/Form.css';
 
 interface SignupFormState {
   first_name: string;
@@ -54,7 +55,8 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="form-container">
+    <h2>Join the race</h2>
       <input
         type="text"
         name="first_name"
@@ -62,7 +64,7 @@ const SignupForm: React.FC = () => {
         onChange={handleChange}
         placeholder="First Name"
         required
-      /><br/>
+      />
       <input
         type="text"
         name="last_name"
@@ -70,7 +72,7 @@ const SignupForm: React.FC = () => {
         onChange={handleChange}
         placeholder="Last Name"
         required
-      /><br/>
+      />
       <input
         type="text"
         name="email"
@@ -78,7 +80,7 @@ const SignupForm: React.FC = () => {
         onChange={handleChange}
         placeholder="Email"
         required
-      /><br/>
+      />
       <input
         type="password"
         name="password"
@@ -86,9 +88,9 @@ const SignupForm: React.FC = () => {
         onChange={handleChange}
         placeholder="Password"
         required
-      /><br/>
-      <button type="submit">Register</button>
-    </form>
+      />
+      <button onClick={handleSubmit}>Register</button>
+    </div>
   );
 };
 

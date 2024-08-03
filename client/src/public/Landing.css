@@ -1,51 +1,75 @@
-.landing-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 900px; /* Adjust the max width as needed */
-    gap: 50px; /* Horizontal gap between forms */
-  }
-  
-  .site-header {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #000000; /* Light background for the header */
-    margin-bottom: 20px; /* Space below the header */
-    font-size: 14px; /* Larger font size for the site name */
-    color: #fff;
-  }
-     
-  .signup-container, .login-container {
-    flex: 1; /* Both containers take up equal space */
-    padding: 20px; /* Space inside each form container */
-    border: 1px solid #ccc; /* Border around each form */
-    background-color: #f9f9f9; /* Light grey background */
-  }
-  
-  .form-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px; /* Space below the title */
-  }
-  
-  input {
-    width: calc(100% - 22px); /* Full width minus padding */
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #000; /* Dark blue background */
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #343434; /* Slightly darker blue on hover */
-  }
-  
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+}
+
+.left-panel .logo img {
+  height: 8vh; /* Adjust the height as necessary */
+  margin-right: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.right-panel {
+  background-color: black;
+  color: white;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-panel {
+  background-color: #176d65;
+  color: white;
+  flex: 0.923;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.left-panel .logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 1.5rem;
+  letter-spacing: 0.6em;
+}
+
+.left-panel .tagline {
+  font-size: 2.8rem;
+  margin-bottom: 30px;
+  width:60%;
+}
+
+.left-panel button {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 26px;
+}
+
+.left-panel button:hover {
+  background-color: white;
+  color: #176d65;
+}

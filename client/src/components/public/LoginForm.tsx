@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import '../css/Form.css';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -35,9 +36,13 @@ const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+    <div className="form-container">
+      <div className="title">Sign in to the portal</div>
+      
       <input type="email" value={email} placeholder="Email" onChange={e => setEmail(e.target.value)} />
       <input type="password" value={password} placeholder="Password" onChange={e => setPassword(e.target.value)} />
-      <button type="submit">Log In</button>
+      <button type="submit" className='login-btn' onClick={handleSubmit}>Sign In</button>
+    </div>
     </form>
   );
 };

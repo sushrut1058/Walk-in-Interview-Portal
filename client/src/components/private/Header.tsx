@@ -10,13 +10,11 @@ const Header: React.FC = () => {
     auth.logOut();
   }
   return (
-    <div>
-      <header className="home-header">
-        <h2>Aurora</h2>
-        <button onClick={handleLogout} className="logout-button">
-          {auth.isAuthenticated && <img src={logOutIcon}/>}
-        </button>
-      </header>
+    <div className="header">
+        <div className="logo">
+            <img src="/logo.png" alt="Logo" />
+            <span>sawdust</span>
+        </div>
     </div>
   );
 };
