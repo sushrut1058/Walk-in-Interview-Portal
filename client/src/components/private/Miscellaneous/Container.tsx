@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 
 interface ContainerProps {
   activeComponent: React.ReactElement | undefined;

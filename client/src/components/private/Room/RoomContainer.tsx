@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback, Component } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../../auth/AuthContext';
 import { Socket, io } from 'socket.io-client';
 import axios from 'axios';
-import './css/RoomContainer.css';
-import WaitingContainer from './WaitingContainer';
-import WaitingBox from './WaitingBox';
+import '../css/RoomContainer.css';
+import WaitingBox from '../Waiting/WaitingBox';
 
 interface props{
     roomId: string | undefined;
@@ -16,7 +14,6 @@ const RoomContainer: React.FC<props> = ({roomId}: props) => {
 
   const auth = useAuth();
   const socket = useRef<Socket | null> (null);
-  const [waitingComp, setWaitingComp] = useState<React.ReactElement>();
 
   const [stream, setStream] = useState<MediaStream | null> (null);
   const userStreamRef = useRef<MediaStream | null>(null);

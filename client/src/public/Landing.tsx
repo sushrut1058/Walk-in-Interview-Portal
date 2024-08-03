@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LoginForm from '../components/public/LoginForm';
 import SignupForm from '../components/public/SignupForm';
 import './Landing.css';  // Import the CSS for styling
-import Header from '../components/private/Header';
+import Header from '../components/private/Miscellaneous/Header';
 import Logo from '../static/logo.png';
 
 const Landing: React.FC = () => {

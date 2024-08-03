@@ -1,18 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import Header from '../components/private/Header';
+import { useAuth } from '../auth/AuthContext';
+import Header from '../components/private/Miscellaneous/Header';
 import "./css/Room.css"
-import SideBar from "../components/private/SideBar";
-import RoomContainer from "../components/private/RoomContainer";
-import WaitingContainer from "../components/private/WaitingContainer";
+import RoomContainer from "../components/private/Room/RoomContainer";
 
 
 const Room: React.FC = () => {
 const { roomId } = useParams<{ roomId: string }>();
   const { isAuthenticated, user, isLoading, logOut, updateUser, validateToken } = useAuth(); // Destructure to get isAuthenticated
-  const [activeComp, setActiveComp] = useState<React.ReactElement>();
-  const [activeButton, setActiveButton] = useState<string>('');
 
   const [activeComponent, setActiveComponent] = useState<string|undefined>('Room');
 
@@ -29,11 +25,6 @@ const { roomId } = useParams<{ roomId: string }>();
           return <RoomContainer roomId={roomId}/>;
     }
   };
-
-  const handleCompSwitch = (component: React.ReactElement, buttonId: string) => {
-    setActiveComp(component);
-    setActiveButton(buttonId);
-  };
   
   return (
     <div className="rooms_home">
@@ -46,23 +37,5 @@ const { roomId } = useParams<{ roomId: string }>();
     </div>
   );
 };
-
-
-
-
-
-// const WaitingArena: React.FC = () => {
-//   const {roomId} = useParams();
-//   return (
-//     <div>
-//       <Header/>
-//       <div>
-//       <h1>Waiting Arena for Room Id: {roomId}</h1>
-//       <h3>Active Users</h3>
-//       <Waiting roomId={roomId} />
-//       </div>
-//     </div>
-//   );
-// };
 
 export default Room;

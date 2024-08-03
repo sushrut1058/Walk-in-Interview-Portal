@@ -9,7 +9,6 @@ interface PublicRouteProps {
 const PublicRoute : React.FC<PublicRouteProps> = ({component: Component}) => {
     const {isAuthenticated, isLoading} = useAuth();
 
-    // if (isAuthenticated==null) return null;
     if (isLoading){
         return <div>Loading...</div>
     }

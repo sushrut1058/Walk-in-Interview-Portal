@@ -54,6 +54,14 @@ const User = sequelize.define('User', {
 
 User.hasMany(Room, { foreignKey: 'id' });
 Room.belongsTo(User, { foreignKey: 'userId' });
-Candidate.belongsTo(User, {foreignKey: 'userId'});
+// User.hasMany(Candidate, {foreignKey: 'id'});
+
+// Candidate.belongsTo(User, {foreignKey: 'userId'});
+
+// Candidate.belongsTo(User, { foreignKey: 'userId' });
+// Candidate.belongsTo(Room, { foreignKey: 'roomId' });
+// User.hasMany(Candidate, { foreignKey: 'id' });
+// Room.hasMany(Candidate, { foreignKey: 'roomId' });
+
 
 module.exports = User;

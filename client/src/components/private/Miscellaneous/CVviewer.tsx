@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import "./css/CVviewer.css";
+import "../css/CVviewer.css";
 
 interface props {
   file_: string | null;

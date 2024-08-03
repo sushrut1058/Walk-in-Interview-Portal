@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const { register, login, verifyEmail, resendEmail, onboardUser, validateToken } = require('./controllers/userController');
 const { authenticate, authenticate_lv1 } = require('../middleware/auth');
-const { saveUser, createRoom, getActiveRooms, getHistory, fetchPartialProfile, fetchCV } = require('./controllers/actions');
+const { saveUser, createRoom, getActiveRooms, getHistory, fetchPartialProfile, fetchCV, fetchSavedUsers } = require('./controllers/actions');
 const { fetchProfile, updateProfile } = require('./controllers/secureActions');
 const router = express.Router();
 
@@ -34,5 +34,6 @@ router.get('/actions/cv/:userId', authenticate, fetchCV);
 //misc imp stuff
 router.get('/profile', authenticate, fetchProfile);
 router.post('/update', authenticate, updateProfile);
+router.get('/actions/saved-users', authenticate, fetchSavedUsers);
 
 module.exports = router;

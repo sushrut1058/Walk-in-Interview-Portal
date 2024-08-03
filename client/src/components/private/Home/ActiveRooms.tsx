@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import '../css/ActiveRooms.css';
@@ -58,7 +58,7 @@ const ActiveRooms: React.FC = () => {
             <td>{room.title}</td>
             <td>{room.duration}</td>
             <td>{room.createdAt}</td>
-            <td><a href={room.linkedin}>Profile Link</a></td>
+            <td><a href={room.linkedin} target="_blank">Profile Link</a></td>
           </tr>
         ))}
         </tbody>

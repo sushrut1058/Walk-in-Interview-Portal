@@ -1,14 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import io, { Socket } from "socket.io-client";
-import Waiting from '../components/private/Waiting';
-import Header from '../components/private/Header';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
+import Header from '../components/private/Miscellaneous/Header';
 import "../components/private/css/Recruiter.css"
-import SideBar from "../components/private/SideBar";
-import WaitingContainer from "../components/private/WaitingContainer";
-
-const sock_url = "http://localhost:5000";
+import SideBar from "../components/private/Miscellaneous/SideBar";
+import WaitingContainer from "../components/private/Waiting/WaitingContainer";
 
 interface User{
   id: string,
@@ -18,9 +14,6 @@ interface User{
 const WaitingArena: React.FC = () => {
   const {roomId} = useParams();
   const { isAuthenticated, user, isLoading, logOut, updateUser, validateToken } = useAuth(); // Destructure to get isAuthenticated
-  const [activeComp, setActiveComp] = useState<React.ReactElement>();
-  const [activeButton, setActiveButton] = useState<string>('');
-
   const [activeComponent, setActiveComponent] = useState<string|undefined>('Waiting Arena');
 
   if (isLoading){
@@ -37,11 +30,6 @@ const WaitingArena: React.FC = () => {
         default:
           return <WaitingContainer roomId={roomId}/>;
     }
-  };
-
-  const handleCompSwitch = (component: React.ReactElement, buttonId: string) => {
-    setActiveComp(component);
-    setActiveButton(buttonId);
   };
   
   return (

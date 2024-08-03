@@ -5,14 +5,15 @@ const Candidate = require('../../models/Candidate');
 const { v4: uuidv4 } = require('uuid'); 
 const cron = require('node-cron');
 const schedule = require('node-schedule');
+const roomStates = require('../../sharedState');
 
 
 exports.saveUser = async (req, res) => {
     try{
-        console.log("Req.userId",req.userId);
         const room = await Room.findOne({
             where:{
-                userId: req.userId
+                userId: req.userId,
+                active: true
             }
         });
         
@@ -22,9 +23,31 @@ exports.saveUser = async (req, res) => {
         }else{
             return res.status(400).json({message: "Invalid request"});
         }
+        
+        const curState = await roomStates.getRoomState(room.roomId);
+        console.log(curState)
+        const attendee = curState.attendee;
+        const creator = curState.creator;
+
+        console.log(creator, attendee, curState);
+
+        // Check if the user is already a candidate in the room
+        const existingCandidate = await Candidate.findOne({
+            where: {
+                roomId: room.roomId,
+                userId: attendee
+            }
+        });
+
+        if (existingCandidate) {
+            return res.status(400).json({ message: "User already exists in the room" });
+        }
+
+        console.log(room.roomId, creator, req.userId);
         const newUser = await Candidate.create({
             roomId: room.roomId,
-            userId: req.userId
+            userId: attendee,
+            creatorId: creator
         });
         if(newUser){
             return res.status(201).json({message: "User saved successfully!"});
@@ -36,6 +59,21 @@ exports.saveUser = async (req, res) => {
         console.log("Error saving user", e);
         res.status(500).json({message:'Something went wrong while saving user'});
     }
+}
+
+exports.fetchSavedUsers = async (req, res) => {
+    try {
+        const users = await Candidate.findAll ({
+            where : {
+                creatorId : req.userId 
+            }
+        });
+        // console.log(users);
+        res.status(200).json(users);
+      } catch (error) {
+        console.error("Error fetching room and candidates info:", error);
+        throw error; // You may want to handle this differently in production
+      }    
 }
 
 exports.createRoom = async (req, res) => {
@@ -131,7 +169,8 @@ exports.getHistory = async (req,res) => {
 
 exports.fetchPartialProfile = async (req, res) => {
     const {userId} = req.params;
-    console.log("userid:",userId);
+    console.log("userids:",userId, req.userId);
+    console.log("role:",req.role, req.role!==2); 
     if (req.userId!==userId && req.role!==2){
         return res.status(401).json({message: "Not authorized to view the profile"});
     }

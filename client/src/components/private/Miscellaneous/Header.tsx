@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import logOutIcon from "../../static/logout.png"
-import "./css/Header.css"
+import "../css/Header.css"
 
 const Header: React.FC = () => {
   

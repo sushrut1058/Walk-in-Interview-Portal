@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 import CreateRoom from "./Home/CreateRoom";
 import ActiveRooms from "./Home/ActiveRooms";
 import "./css/Recruiter.css"
-import Profile from "./Profile";
-import History from "./History";
-import Settings from "./Settings";
-import SideBar from "./SideBar";
-import Header from "./Header";
+import Profile from "./Home/Profile";
+import History from "./Home/History";
+import Settings from "./Home/Settings";
+import SideBar from "./Miscellaneous/SideBar";
+import Header from "./Miscellaneous/Header";
+import SavedUsers from "./Home/SavedUsers";
 
 const sock_url = "http://localhost:5000";
 
@@ -32,8 +33,8 @@ const Recruiter: React.FC = () => {
             return <Profile userId={user.id}/>;
         case 'Active Rooms':
             return <ActiveRooms />;
-        case 'History':
-            return <History />;
+        case 'Saved Users':
+            return <SavedUsers />;
         case 'Settings':
             return <Settings />;
         case 'Create Room':
@@ -47,7 +48,7 @@ const Recruiter: React.FC = () => {
     <div className="recruiter_home">
       <Header/>
       <div className="recruiter_main-content">
-        <SideBar setActiveComponent={setActiveComponent} activeComponent={activeComponent} compList={["Profile", "Create Room","Active Rooms", "History", "Settings"]} />
+        <SideBar setActiveComponent={setActiveComponent} activeComponent={activeComponent} compList={["Profile", "Create Room","Active Rooms", "Saved Users", "Settings"]} />
         <div className="recruiter_content">
             {renderComponent()}
         </div>

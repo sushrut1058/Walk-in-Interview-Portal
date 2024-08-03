@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "../../contexts/AuthContext";
-import logOutIcon from "../../static/logout.png"
-import "./css/Settings.css"
+import { useAuth } from "../../../auth/AuthContext";
+import "../css/Settings.css"
 
 interface User{
   first_name: string;
@@ -17,7 +16,7 @@ interface User{
 
 const Settings = () => {
 
-  const { isAuthenticated, user, isLoading, logOut, updateUser, validateToken } = useAuth(); // Destructure to get isAuthenticated
+  const { isAuthenticated, user, isLoading, logOut, updateUser, validateToken } = useAuth();
   const [userData, setUserData] = useState<User>({
     first_name: '',
     last_name: '',
@@ -25,7 +24,6 @@ const Settings = () => {
     company: '',
     linkedin: '',
     github: '',
-    // cv: null,
     companyLinkedin: ''
   });
 

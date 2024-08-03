@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 import ActiveRooms from "./Home/ActiveRooms";
 import "./css/Recruiter.css"
-import Profile from "./Profile";
-import History from "./History";
-import Settings from "./Settings";
-import SideBar from "./SideBar";
-import Header from "./Header";
+import Profile from "./Home/Profile";
+import History from "./Home/History";
+import Settings from "./Home/Settings";
+import SideBar from "./Miscellaneous/SideBar";
+import Header from "./Miscellaneous/Header";
 
 const sock_url = "http://localhost:5000";
 

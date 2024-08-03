@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import './css/History.css';
+import '../css/History.css';
 
 interface Room{
   roomId: string,

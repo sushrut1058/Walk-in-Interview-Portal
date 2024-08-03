@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import EmailVerification from "../components/private/EmailVerification";
-import Onboard from "../components/private/Onboard";
+import { useAuth } from "../auth/AuthContext";
+import EmailVerification from "../components/private/Registration/EmailVerification";
+import Onboard from "../components/private/Registration/Onboard";
 import Hunter from "../components/private/Hunter";
 import Recruiter from "../components/private/Recruiter";
 import "./css/HomePage.css"

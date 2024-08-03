@@ -1,4 +1,4 @@
-.WaitingContainer-container {
+.history-container {
     color: black;
     width: 100%;
     /* height: 70%; */
@@ -13,7 +13,7 @@
     border-radius: 20px;
 }
 
-.WaitingContainer-header {
+.history-header {
     width: 37.09%;
     display: flex;
     justify-content: center;
@@ -23,9 +23,10 @@
     text-align: center;
     height: 13.24%;
     align-self: center;
+    box-shadow: 0 0 3px white;
 }
 
-.WaitingContainer-header span {
+.history-header span {
     font-size: 1.68rem;
 }
 
@@ -51,52 +52,35 @@
     color: black;
 }
 
-.WaitingContainer-table {
+.history-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #000000;
 }
 
-.WaitingContainer-table thead th {
+.history-table thead th {
     background-color: #333333;
     color: white;
     height: 5.35vh;
     /* padding: 10px; */
 }
 
-.WaitingContainer-table tbody td {
+.history-table tbody td {
     color: white;
     /* padding: 10px; */
     height: 5.35vh;
     text-align: center;
 }
 
-.WaitingContainer-table tbody tr {
+.history-table tbody tr {
     background-color: #170E0E;
 }
 
-.WaitingContainer-table tbody tr:hover {
+.history-table tbody tr:hover {
     background-color: #fff;
     
 }
 
-.WaitingContainer-table tbody tr:hover td{
+.history-table tbody tr:hover td{
     color: #170E0E;
 }
-
-.WaitingContainer-table tbody tr button {
-    background: black;
-    border: 1px solid white;
-    color: #fff;
-    height: 75%;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    width: 50%;
-  
-  }
-  
-  .WaitingContainer-table tbody tr button:hover {
-    background-color: red;
-    color: white;
-  }

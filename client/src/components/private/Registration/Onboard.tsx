@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import './css/Onboard.css';
+import { useAuth } from "../../../auth/AuthContext";
+import '../css/Onboard.css';
 
 interface User{
   company: string | null;

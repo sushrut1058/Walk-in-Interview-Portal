@@ -1,10 +1,11 @@
 // models/Room.js
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./config/database'); // Adjust the import based on your project structure
+const sequelize = require('./config/database');
+const Candidate = require('./Candidate');
 
-class Room extends Model {}
+// class Room extends Model {}
 
-Room.init({
+const Room = sequelize.define('Room',{
     title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -16,6 +17,7 @@ Room.init({
     roomId: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     linkedin: {
         type: DataTypes.STRING,
@@ -39,5 +41,5 @@ Room.init({
     sequelize,
     modelName: 'Room'
 });
-
+ 
 module.exports = Room;

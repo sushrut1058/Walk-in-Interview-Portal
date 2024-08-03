@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../../auth/AuthContext';
 import io, { Socket } from "socket.io-client";
-import './css/Waiting.css';
-import Profile from './Profile';
+import '../css/Waiting.css';
+import Profile from '../Home/Profile';
 
 interface User{
   id: string,

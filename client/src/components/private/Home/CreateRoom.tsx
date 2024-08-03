@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import '../css/CreateRoom.css';
@@ -11,7 +11,7 @@ const CreateRoom: React.FC = () => {
   const [duration, setDuration] = useState('#');
   const navigate = useNavigate();
   const handleSubmit = async (event: any) => {
-    event.preventDefault(); // Prevent the form from submitting traditionally
+    event.preventDefault();
     console.log('Submitted with name:', title, 'and duration:', duration);
     
     try{

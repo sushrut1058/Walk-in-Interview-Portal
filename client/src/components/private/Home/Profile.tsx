@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useAuth} from '../../contexts/AuthContext';
 import axios from 'axios';
-import './css/Profile.css';
+import '../css/Profile.css';
 
 interface profileInfo {
     first_name: string;

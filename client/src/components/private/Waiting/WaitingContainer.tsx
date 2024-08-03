@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import './css/WaitingContainer.css';
+import '../css/WaitingContainer.css';
 import Waiting from "./Waiting";
 
 const sock_url = "http://localhost:5000";
@@ -44,10 +44,13 @@ const WaitingContainer: React.FC<props> = ({roomId}: props) => {
         </thead>
         <tbody>
         {users?.map((user:User, index: number) => (
+          user.id!=auth.user.id ?
           <tr>
             <td>{index+1}</td>
             <td>{user.first_name}</td>
           </tr>
+          :
+          <></>
         ))}
         </tbody>
       </table>
